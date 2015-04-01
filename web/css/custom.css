@@ -1,0 +1,143 @@
+div.Content{
+	margin: 0px auto;
+	width: 1200px;
+}
+
+div.Header{
+	background: white;
+	float: left;
+	width: 1198px;
+	text-align: center;
+}
+
+div.Footer{
+	clear: both;
+	text-align: center;
+	padding: 10px 10px 10px;
+	color: rgb(144, 144, 144);
+	float: left;
+	width: 1178px;
+	/* To prefent footer to get more space than needed. (cfr padding)  */
+	height: 0px;
+}
+
+
+div.Category{
+    border-bottom: 1px solid lightgray;
+    width: 99%;
+    padding: 5px;
+}
+
+
+div.Block{
+	background-color: white;
+	float: left;
+	width: 1198px;
+	min-height:600px;
+}
+
+div.Tech{
+	text-align: justify;
+	margin: 1px;
+	padding: 1px;
+	float: right;
+	width:54%;
+}
+
+div.PictureIndex{
+	margin: 1px;
+	padding: 1px;
+	float: left;
+    text-align: center;
+	width: 160px;
+	height: 45%;
+}
+
+img.Index{
+	max-width: 150px;
+	max-height: 150px;
+}
+
+td.Cell{
+	width: 400px;
+	max-height: 200px;
+	vertical-align:middle;
+}
+
+img.Detail{
+	padding: 10px;
+	max-width: 400px;
+	max-height: 400px;
+	margin: auto;
+}
+
+div.Picture{
+	margin: 1px;
+	padding: 1px;
+	float: left;
+    text-align: center;
+	width: 43%;
+	height: 45%;
+}
+
+div.Lign{
+	border-bottom: 1px solid rgb(229, 229, 229);	
+	padding: 10px 5px 10px 5px;
+	overflow: auto;
+}
+
+div.Space{
+	margin: 5px;
+	padding: 5px;
+}
+
+a.Index:link, a.Index:visited, a.Index:active{
+	color: black;
+	text-decoration: none;
+	height: 100%;
+	width: 100%;
+	display:block;
+}	
+
+div.Doc{
+	float: left;
+	width: 971px;
+	height: 870px;
+	padding: 0px 0px 10px;
+	background-color: white;
+	font-size: 12px;
+	text-align: justify;
+	overflow: auto;
+	overflow-y: auto;
+	overflow-x: none
+}
+div.DocLR{
+	float: left;
+	width: 971px;
+	padding: 0px 0px 10px;
+	background-color: white;
+	font-size: 12px;
+	text-align: justify;
+	overflow: auto;
+	overflow-y: auto;
+	overflow-x: none
+}
+
+DIV.PictureResults{
+    margin: 1px;
+    padding: 1px;
+    float: left;
+    text-align: center;
+    width: 150px;
+	max-height: 150px;
+}
+
+DIV.TechResults{
+    text-align: justify;
+    margin: 1px;
+    padding: 1px;
+    float: right;
+    width:74%;
+}
+
+
