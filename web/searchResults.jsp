@@ -12,7 +12,7 @@
                         <% restaurants = (Restaurant[]) request.getAttribute("restaurants"); %>
                         
                         <% for (Restaurant restaurant: restaurants) { %>
-                            <a href="<%= request.getContextPath()%>/RestoWeb?action=displayResto&id=<%= restaurant.getRestaurantId()%>" class="Index">
+                            <a href="<%= request.getContextPath()%>/RestoWeb?action=displayResto&id=<%= restaurant.getId()%>" class="Index">
                                  <div class="Lign">
                                     <div class="PictureResults">
                                         <img class="Index" title="<%= restaurant.getName()%>" src="pictures/default.jpg">
@@ -20,8 +20,8 @@
                                     <div class="TechResults">
                                         <b><%= restaurant.getName()%></b>
                                         <ul>
-                                            <li>Type of food</li>
-                                            <li>City</li>
+                                            <li><%= restaurant.getFoodType().getName() %></li>
+                                            <li>*City*</li>
                                             <li><%= restaurant.getDescription()%></li>
                                         </ul>
                                     </div>

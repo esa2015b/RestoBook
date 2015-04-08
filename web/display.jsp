@@ -12,7 +12,7 @@
                                 
 				<!-- Restaurant picture -->
 				<div class="Picture">
-					<img class="Detail"  title="Restaurant Name" src="pictures/default.jpg"><br>
+					<img class="Detail"  title="<%= restaurant.getName()%>" src="pictures/default.jpg"><br>
 				<a href="#">Map Link</a>
 				</div>
 				<!-- End Restaurant picture -->
@@ -22,16 +22,16 @@
                                     <%= restaurant.getName()%>
 				</div>
 				<div class="Lign">
-                                    *Food Type*
+                                    <%= restaurant.getFoodType().getName() %>
 				</div>
 				<div class="Lign">
                                     <%= restaurant.getDescription()%>
 				</div>
 				<div class="Lign">
-                                    <%= restaurant.getPlaceQuantity()%>
+                                    Place Quantity : <%= restaurant.getPlaceQuantity()%>
 				</div>
 				<div class="Lign">
-                                    Contact
+                                    Contact :
                                     <ul>
 					<li><%= restaurant.getMail()%></li>
 					<li>*Address*</li>

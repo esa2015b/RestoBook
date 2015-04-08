@@ -11,170 +11,221 @@ package domain;
  */
 public class Restaurant {
      
-    private int restaurantId;
-    private String name;
-    private String mail;
-    private String phone;
-    private String description;
-    private int placeQuantity;
-    private String dayOfClosing;
-    private String picture;
-    private boolean enable;
-    private boolean isPremium;
+    private int Id;
+    private String Name;
+    private String Mail;
+    private String Phone;
+    private String Description;
+    private int PlaceQuantity;
+    private String DayOfClosing;
+    private String PictureLocation;
+    private boolean IsEnable;
+    private boolean IsPremium;
+    private PriceList[] PriceList;
+    private Employee[] Employee;
+    private FoodType FoodType;
     
-    public Restaurant (int restaurantId, String name, String mail, String phone, String description, int placeQuantity, String dayOfClosing, String picture, boolean enable, boolean isPremium){
-        this.restaurantId = restaurantId;
-        this.name=name;
-        this.mail=mail;
-        this.phone=phone;
-        this.description=description;
-        this.placeQuantity=placeQuantity;
-        this.dayOfClosing=dayOfClosing;
-        this.picture=picture;
-        this.enable=enable;
-        this.isPremium=isPremium;
+    public Restaurant (int Id, String Name, String Mail, String Phone, String Description, int PlaceQuantity, String DayOfClosing, String PictureLocation, boolean IsEnable, boolean IsPremium, PriceList[] PriceList, Employee[] Employee, FoodType FoodType){
+        this.Id=Id;
+        this.Name=Name;
+        this.Mail=Mail;
+        this.Phone=Phone;
+        this.Description=Description;
+        this.PlaceQuantity=PlaceQuantity;
+        this.DayOfClosing=DayOfClosing;
+        this.PictureLocation=PictureLocation;
+        this.IsEnable=IsEnable;
+        this.IsPremium=IsPremium;
+        this.PriceList=PriceList;
+        this.Employee=Employee;
+        this.FoodType=FoodType;
     }
     
+    public Restaurant(){
+        
+    }
     
+    /**
+     * @return the RestaurantId
+     */
+    public int getId() {
+        return Id;
+    }
 
     /**
-     * @return the restaurantId
+     * @param RestaurantId the RestaurantId to set
      */
-    public int getRestaurantId() {
-        return restaurantId;
+    public void setId(int RestaurantId) {
+        this.Id = RestaurantId;
     }
 
     /**
-     * @param restaurantId the restaurantId to set
-     */
-    public void setRestaurantId(int restaurantId) {
-        this.restaurantId = restaurantId;
-    }
-    
-    /**
-     * @return the name
+     * @return the Name
      */
     public String getName() {
-        return name;
+        return Name;
     }
 
     /**
-     * @param name the name to set
+     * @param Name the Name to set
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String Name) {
+        this.Name = Name;
     }
 
     /**
-     * @return the mail
+     * @return the Mail
      */
     public String getMail() {
-        return mail;
+        return Mail;
     }
 
     /**
-     * @param mail the mail to set
+     * @param Mail the Mail to set
      */
-    public void setMail(String mail) {
-        this.mail = mail;
+    public void setMail(String Mail) {
+        this.Mail = Mail;
     }
 
     /**
-     * @return the phone
+     * @return the Phone
      */
     public String getPhone() {
-        return phone;
+        return Phone;
     }
 
     /**
-     * @param phone the phone to set
+     * @param Phone the Phone to set
      */
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhone(String Phone) {
+        this.Phone = Phone;
     }
 
     /**
-     * @return the description
+     * @return the Description
      */
     public String getDescription() {
-        return description;
+        return Description;
     }
 
     /**
-     * @param description the description to set
+     * @param Description the Description to set
      */
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescription(String Description) {
+        this.Description = Description;
     }
 
     /**
-     * @return the placeQuantity
+     * @return the PlaceQuantity
      */
     public int getPlaceQuantity() {
-        return placeQuantity;
+        return PlaceQuantity;
     }
 
     /**
-     * @param placeQuantity the placeQuantity to set
+     * @param PlaceQuantity the PlaceQuantity to set
      */
-    public void setPlaceQuantity(int placeQuantity) {
-        this.placeQuantity = placeQuantity;
+    public void setPlaceQuantity(int PlaceQuantity) {
+        this.PlaceQuantity = PlaceQuantity;
     }
 
     /**
-     * @return the dayOfClosing
+     * @return the DayOfClosing
      */
     public String getDayOfClosing() {
-        return dayOfClosing;
+        return DayOfClosing;
     }
 
     /**
-     * @param dayOfClosing the dayOfClosing to set
+     * @param DayOfClosing the DayOfClosing to set
      */
-    public void setDayOfClosing(String dayOfClosing) {
-        this.dayOfClosing = dayOfClosing;
+    public void setDayOfClosing(String DayOfClosing) {
+        this.DayOfClosing = DayOfClosing;
     }
 
     /**
-     * @return the picture
+     * @return the PictureLocation
      */
-    public String getPicture() {
-        return picture;
+    public String getPictureLocation() {
+        return PictureLocation;
     }
 
     /**
-     * @param picture the picture to set
+     * @param PictureLocation the PictureLocation to set
      */
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setPictureLocation(String PictureLocation) {
+        this.PictureLocation = PictureLocation;
     }
 
     /**
-     * @return the enable
+     * @return the IsEnable
      */
-    public boolean isEnable() {
-        return enable;
+    public boolean isIsEnable() {
+        return IsEnable;
     }
 
     /**
-     * @param enable the enable to set
+     * @param IsEnable the IsEnable to set
      */
-    public void setEnable(boolean enable) {
-        this.enable = enable;
+    public void setIsEnable(boolean IsEnable) {
+        this.IsEnable = IsEnable;
     }
 
     /**
-     * @return the isPremium
+     * @return the IsPremium
      */
     public boolean isIsPremium() {
-        return isPremium;
+        return IsPremium;
     }
 
     /**
-     * @param isPremium the isPremium to set
+     * @param IsPremium the IsPremium to set
      */
-    public void setIsPremium(boolean isPremium) {
-        this.isPremium = isPremium;
+    public void setIsPremium(boolean IsPremium) {
+        this.IsPremium = IsPremium;
     }
- 
+
+    /**
+     * @return the PriceList
+     */
+    public PriceList[] getPriceList() {
+        return PriceList;
+    }
+
+    /**
+     * @param PriceList the PriceList to set
+     */
+    public void setPriceList(PriceList[] PriceList) {
+        this.PriceList = PriceList;
+    }
+
+    /**
+     * @return the Employee
+     */
+    public Employee[] getEmployee() {
+        return Employee;
+    }
+
+    /**
+     * @param Employee the Employee to set
+     */
+    public void setEmployee(Employee[] Employee) {
+        this.Employee = Employee;
+    }
+
+    /**
+     * @return the FoodType
+     */
+    public FoodType getFoodType() {
+        return FoodType;
+    }
+
+    /**
+     * @param FoodType the FoodType to set
+     */
+    public void setFoodType(FoodType FoodType) {
+        this.FoodType = FoodType;
+    }
+    
+    
 }
