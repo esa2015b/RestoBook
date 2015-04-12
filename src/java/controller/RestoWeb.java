@@ -28,32 +28,19 @@ public class RestoWeb extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            if (request.getParameter("action") != null && request.getParameter("action").equals("displayResto")) {
+            /*
+            displayResto action == "I feel lucky" in navbar
+            */
+            if (request.getParameter("action") != null && request.getParameter("action").equals("displayResto"))
+            {
+                IPersistanceManager pm = new PersistanceManager();
+                Restaurant restaurant = new Restaurant();
+               
+                restaurant = pm.getRandomRestaurant();
                 
-                IDummyAble dummy = new DummyMgr();
-                Restaurant resto = null;
-                
-                if(request.getParameter("id") != null){
-                    resto = dummy.getRestaurant(Integer.parseInt(request.getParameter("id")));
-                }else{
-                    resto = dummy.getRdmRestaurant();
-                }
-                
-                request.setAttribute("restaurant", resto);   
-                
+                request.setAttribute("restaurant", restaurant); 
+
                 RequestDispatcher view = request.getRequestDispatcher("display.jsp");
-                view.forward(request, response);
-        
-            }else if (request.getParameter("action") != null && request.getParameter("action").equals("searchResto")) {
-                
-                IDummyAble dummy = new DummyMgr();
-                Restaurant[] restaurants = null;
-                
-                restaurants = dummy.getAllRestaurant();
-                
-                request.setAttribute("restaurants", restaurants); 
-                
-                RequestDispatcher view = request.getRequestDispatcher("searchResults.jsp");
                 view.forward(request, response);
         
             }
