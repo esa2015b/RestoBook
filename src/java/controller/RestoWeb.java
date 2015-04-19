@@ -7,7 +7,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import domain.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import model.*;
 
 /**
@@ -28,12 +34,13 @@ public class RestoWeb extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            /*
-            displayResto action == "I feel lucky" in navbar
+            
+            /**
+            *displayResto action == "I feel lucky" in navbar
             */
-            if (request.getParameter("action") != null && request.getParameter("action").equals("displayResto"))
-            {
-                IPersistanceManager pm = new PersistanceManager();
+            if (request.getParameter("action") != null && request.getParameter("action").equals("displayResto")){
+                
+                PersistenceMgr pm = new PersistenceMgr();
                 Restaurant restaurant = new Restaurant();
                
                 restaurant = pm.getRandomRestaurant();
@@ -42,7 +49,89 @@ public class RestoWeb extends HttpServlet {
 
                 RequestDispatcher view = request.getRequestDispatcher("display.jsp");
                 view.forward(request, response);
-        
+            }
+            
+            /**
+             * display one Restaurant search by his name in navBar
+             */
+            else if (request.getParameter("action") != null && request.getParameter("action").equals("searchResto")){
+                String name = request.getParameter("name");
+                Restaurant restaurant = new Restaurant();
+                
+                //if the restaurant's name input is null
+                if (name.isEmpty()){
+                    ControllerException error = new ControllerException("nameResto", "aucun  nom de restaurant");
+                    request.setAttribute("error", error);
+                    RequestDispatcher view = request.getRequestDispatcher("errors.jsp");
+                    view.forward(request, response);
+                }
+                
+                //if the restaurant's name input is not null
+                // the name coming from Web Service will be in uppercase
+                else {
+                    DummyMgr pm = new DummyMgr();
+                    restaurant = pm.getRestaurantbyName(name);
+                    
+                    //if the restaurant's name input do not correspond to name in db
+                    if (restaurant.getName() == null){
+                        ControllerException error = new ControllerException("nameResto", "aucun  nom de restaurant correspondant");
+                        request.setAttribute("error", error);
+                        RequestDispatcher view = request.getRequestDispatcher("errors.jsp");
+                        view.forward(request, response);
+                    }
+                    
+                    //if the restaurant's name input have more than 60 characters
+                    else if (name.length()>60){
+                        ControllerException error = new ControllerException("nameResto", "le nom entré est trop long");
+                        request.setAttribute("error", error);
+                        RequestDispatcher view = request.getRequestDispatcher("errors.jsp");
+                        view.forward(request, response);
+                    }
+                    
+                    //in other case of previous (correct input) and name correspondig to name in WebService
+                    else{
+                        request.setAttribute("restaurant", restaurant);
+                        RequestDispatcher view = request.getRequestDispatcher("displayResults.jsp");
+                        view.forward(request, response);
+                    }
+                }
+            }
+            /**
+             * display data for a reservation
+             */
+            
+            else if (request.getParameter("action") != null && request.getParameter("action").equals("sendReservation")){
+                
+                Customer customer = new Customer();
+                Reservation reservation = new Reservation();
+    
+                customer.setMail(request.getParameterValues("customermail")[0]);
+                customer.setPhone(request.getParameterValues("customerphone")[0]);
+                reservation.setPlaceQuantity(Integer.parseInt(request.getParameterValues("placequantity")[0]));
+                //reservation.setReservationDate((Date)request.getParameterValues("reservationdate")[0]);
+                reservation.setService(request.getParameterValues("service")[0]);
+                
+                request.setAttribute("customer", customer);
+                request.setAttribute("reservation", reservation);
+                RequestDispatcher view = request.getRequestDispatcher("displayReservation.jsp");
+                view.forward(request, response);
+                
+            }
+            
+           else if (request.getParameter("action") != null && request.getParameter("action").equals("confirmReservation")){
+               
+                RequestDispatcher view = request.getRequestDispatcher("displayConfirmation.jsp");
+                view.forward(request, response);
+                
+           }
+            
+           /**
+            * Must be implemented with webservice
+            */
+            else if (request.getParameter("action") != null && request.getParameter("action").equals("advancedsearchResto")){ 
+                
+                RequestDispatcher view = request.getRequestDispatcher("displayResults.jsp");
+                view.forward(request, response);  
             }
                     
         } finally {            
