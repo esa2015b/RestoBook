@@ -59,7 +59,6 @@ public class DummyMgr implements IDummyAble{
     
     public Restaurant getRdmRestaurant(){
         
-        
         List listeRestaurant = new ArrayList();  
         
         FoodType ft = new FoodType(0,"La Cuisine Italienne",true,"Italienne");
@@ -113,7 +112,38 @@ public class DummyMgr implements IDummyAble{
         
     }
     
-}
-
-
+    public Restaurant getRestaurantbyName(String Name)
+    {
+        List<Restaurant> listeRestaurant = new ArrayList<>();  
+        
+        FoodType ft = new FoodType(0,"La Cuisine Italienne",true,"Italienne");
+        Employee[] emp = new Employee[1];
+        emp[0] = new Employee(0,"Thibaut","Clausse","tclausse@live.fr","tclausse","0475562191","password",1,true);
+        PriceList[] pl = new PriceList[1];
+        pl[0] = new PriceList(0,"Description de la PL",50,20,true);
+        
+        Restaurant resto1 = new Restaurant(1,"Chez Mario","info@chezmario.com","0123456","Le meilleur de la cuisine italienne",25,"Lundi","",true,false,pl,emp,ft);
+        Restaurant resto2 = new Restaurant(2,"Les 3 Faisans","info@les3faisans.com","1234567","Le meilleur de la cuisine francaise",40,"Mardi","",true,false,pl,emp,ft);
+        Restaurant resto3 = new Restaurant(3,"Au Lotus Bleu","info@lelotusbleu.com","2345678","Le meilleur de la cuisine chinoise",55,"Lundi","",true,false,pl,emp,ft);
+        Restaurant resto4 = new Restaurant(4,"Chez Ismir","info@chezismir.com","3456789","Le meilleur de la cuisine turque",60,"Mercredi","",true,false,pl,emp,ft);
+        
+        listeRestaurant.add(resto1);
+        listeRestaurant.add(resto2);
+        listeRestaurant.add(resto3);
+        listeRestaurant.add(resto4);
+        
+        Restaurant restaurant = new Restaurant();
+        
+        for (Restaurant r : listeRestaurant){
+            if (r.getName() == null ? Name != null : !r.getName().equals(Name))
+            {
+           
+            } else {
+                restaurant = r;
+            }
+        }
+	return restaurant;
+    }
     
+}
+   
