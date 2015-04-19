@@ -226,6 +226,5 @@ public class Restaurant {
     public void setFoodType(FoodType FoodType) {
         this.FoodType = FoodType;
     }
-    
-    
+   
 }
