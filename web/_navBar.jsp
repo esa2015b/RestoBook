@@ -4,7 +4,7 @@
 					  <form class="navbar-form navbar-left" role="search" action="<%= request.getContextPath()%>/RestoWeb" method="post">
 						<div class="form-group">
                                                     <input type="hidden" name="action" value="searchResto">
-                                                    <input type="text" class="form-control" placeholder="Search">
+                                                    <input type="text" class="form-control" name="name" placeholder="Search by name">
 						</div>
 						<button type="submit" class="btn btn-default">Search</button>
 					  </form>
@@ -17,8 +17,8 @@
 						    <div class="dropdown-menu" style="padding: 15px; width: 250px;">
                                                         
 							  <form action="<%= request.getContextPath()%>/RestoWeb" method="post">
-                                                            <input type="hidden" name="action" value="searchResto">
-							    <label>Restaurant name</label> <input type="text" class="form-control" name="restaurant"/><br>
+                                                            <input type="hidden" name="action" value="advancedsearchResto">
+                                                            <label>Restaurant name</label> <input type="text" class="form-control" name="name" placeholder="Search by name"/><br>
 							    <label>Food type</label>
 								  <select name="type" class="form-control">
 								    <option value="0">All</option>
@@ -27,7 +27,7 @@
 								    <option value="Italian">Italian</option>
 								    <option value="Turkish">Turkish</option>
 								  </select><br>
-								<label>City</label> <input type="text" class="form-control" name="city"/><br>
+								<label>City</label> <input type="text" class="form-control" name="city" placeholder="Search by city"/><br>
 								<div align="right">
 								  <button type="submit" class="btn btn-default">Search</button>
 								</div>
