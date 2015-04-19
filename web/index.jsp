@@ -3,8 +3,8 @@
 
 <%-- We write these menu link here so we can change active page --%>
 
-						<li class="active"><a href="index.jsp">Home</a></li>
-						<li><a href="<%= request.getContextPath()%>/RestoWeb?action=displayResto">I Feel Lucky</a></li>
+<li class="active"><a href="index.jsp">Home</a></li>
+<li><a href="<%= request.getContextPath()%>/RestoWeb?action=displayResto">I Feel Lucky</a></li>
 						
 <%@include file="_navBar.jsp" %>
 
@@ -58,7 +58,8 @@
 						<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
 						<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
 					</div>
-					<!-- End of carousel content -->
+                                    <!-- End of carousel content -->
+                                    
 					<div class="Category">
 					
 						<button class="btn btn-default form-inline pull-right" type="button" data-toggle="collapse" data-target="#chinesse" aria-expanded="true" aria-controls="chinesse">Hide</button>
