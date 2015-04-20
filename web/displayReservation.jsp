@@ -11,12 +11,22 @@
 <li><a href="<%= request.getContextPath()%>/RestoWeb?action=displayResto">I Feel Lucky</a></li>
 
 <%@include file="_navBar.jsp" %>
-<jsp:useBean id="customer" scope="request" class="domain.Customer"></jsp:useBean>
-<jsp:useBean id="reservation" scope="request" class="domain.Reservation"></jsp:useBean>
+<div>
+    <h1>
+        Display reservation
+        <jsp:useBean id="restaurant" scope="session" class="domain.Restaurant"></jsp:useBean>
+        <jsp:useBean id="customer" scope="session" class="domain.Customer"></jsp:useBean>
+        <jsp:useBean id="reservation" scope="session" class="domain.Reservation"></jsp:useBean>
+    </h1>
+</div>
     
 <div>
     <fieldset style="float:left">
         <legend>Restaurant</legend>   
+        Name: <jsp:getProperty name="restaurant" property="name"></jsp:getProperty><br>
+        Address: 
+        Phone: <jsp:getProperty name="restaurant" property="phone"></jsp:getProperty><br>
+        
     </fieldset>
 
     <fieldset style="float:right">
@@ -32,3 +42,5 @@
             </form>
     </fieldset>
 </div>
+
+<%@include file="_footer.jsp" %>
