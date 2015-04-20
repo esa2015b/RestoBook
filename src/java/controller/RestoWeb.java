@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 import model.*;
 
 /**
@@ -34,17 +35,18 @@ public class RestoWeb extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            
+
             /**
             *displayResto action == "I feel lucky" in navbar
             */
             if (request.getParameter("action") != null && request.getParameter("action").equals("displayResto")){
-                
                 PersistenceMgr pm = new PersistenceMgr();
-                Restaurant restaurant = new Restaurant();
-               
-                restaurant = pm.getRandomRestaurant();
                 
+                Restaurant restaurant = new Restaurant();
+                restaurant = pm.getRandomRestaurant();
+
+                HttpSession session = request.getSession();
+                session.setAttribute("restaurant", restaurant);
                 request.setAttribute("restaurant", restaurant); 
 
                 RequestDispatcher view = request.getRequestDispatcher("display.jsp");
@@ -57,10 +59,11 @@ public class RestoWeb extends HttpServlet {
             else if (request.getParameter("action") != null && request.getParameter("action").equals("searchResto")){
                 String name = request.getParameter("name");
                 Restaurant restaurant = new Restaurant();
+                HttpSession session = request.getSession();
                 
-                //if the restaurant's name input is null
+                //if the restaurant's name input is null 
                 if (name.isEmpty()){
-                    ControllerException error = new ControllerException("nameResto", "aucun  nom de restaurant");
+                    ControllerException error = new ControllerException("nameResto", "please input any character.");
                     request.setAttribute("error", error);
                     RequestDispatcher view = request.getRequestDispatcher("errors.jsp");
                     view.forward(request, response);
@@ -74,7 +77,7 @@ public class RestoWeb extends HttpServlet {
                     
                     //if the restaurant's name input do not correspond to name in db
                     if (restaurant.getName() == null){
-                        ControllerException error = new ControllerException("nameResto", "aucun  nom de restaurant correspondant");
+                        ControllerException error = new ControllerException("nameResto", "no restaurant found.");
                         request.setAttribute("error", error);
                         RequestDispatcher view = request.getRequestDispatcher("errors.jsp");
                         view.forward(request, response);
@@ -82,7 +85,7 @@ public class RestoWeb extends HttpServlet {
                     
                     //if the restaurant's name input have more than 60 characters
                     else if (name.length()>60){
-                        ControllerException error = new ControllerException("nameResto", "le nom entré est trop long");
+                        ControllerException error = new ControllerException("nameResto", "input's name is too long");
                         request.setAttribute("error", error);
                         RequestDispatcher view = request.getRequestDispatcher("errors.jsp");
                         view.forward(request, response);
@@ -90,6 +93,8 @@ public class RestoWeb extends HttpServlet {
                     
                     //in other case of previous (correct input) and name correspondig to name in WebService
                     else{
+                        session.setAttribute("restaurant", restaurant);
+                        
                         request.setAttribute("restaurant", restaurant);
                         RequestDispatcher view = request.getRequestDispatcher("displayResults.jsp");
                         view.forward(request, response);
@@ -104,32 +109,37 @@ public class RestoWeb extends HttpServlet {
                 
                 Customer customer = new Customer();
                 Reservation reservation = new Reservation();
-    
+                HttpSession session = request.getSession();
+                
+                //datas coming from form in page "displayResults"
                 customer.setMail(request.getParameterValues("customermail")[0]);
                 customer.setPhone(request.getParameterValues("customerphone")[0]);
                 reservation.setPlaceQuantity(Integer.parseInt(request.getParameterValues("placequantity")[0]));
                 //reservation.setReservationDate((Date)request.getParameterValues("reservationdate")[0]);
                 reservation.setService(request.getParameterValues("service")[0]);
+
+                //request.setAttribute("customer", customer);
+                session.setAttribute("customer", customer);
+                //request.setAttribute("reservation", reservation);
+                session.setAttribute("reservation", reservation);
                 
-                request.setAttribute("customer", customer);
-                request.setAttribute("reservation", reservation);
                 RequestDispatcher view = request.getRequestDispatcher("displayReservation.jsp");
                 view.forward(request, response);
                 
             }
-            
-           else if (request.getParameter("action") != null && request.getParameter("action").equals("confirmReservation")){
-               
+           /**
+            * must be update to send datas to DB
+            */
+           else if (request.getParameter("action") != null && request.getParameter("action").equals("confirmReservation")){              
+   
                 RequestDispatcher view = request.getRequestDispatcher("displayConfirmation.jsp");
                 view.forward(request, response);
-                
            }
             
            /**
             * Must be implemented with webservice
             */
-            else if (request.getParameter("action") != null && request.getParameter("action").equals("advancedsearchResto")){ 
-                
+            else if (request.getParameter("action") != null && request.getParameter("action").equals("advancedsearchResto")){  
                 RequestDispatcher view = request.getRequestDispatcher("displayResults.jsp");
                 view.forward(request, response);  
             }
