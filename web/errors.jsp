@@ -15,7 +15,7 @@
 
 <div>
     <h1>
-        Une erreur s'est produite.
+        Sorry an error has occurred.
     </h1>
 </div>
 
