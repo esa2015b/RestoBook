@@ -33,6 +33,10 @@ public class Address {
         this.IsEnable = IsEnable;
     }
     
+    public Address(){
+        
+    }
+    
     public int getId(){
         return Id;
     }
