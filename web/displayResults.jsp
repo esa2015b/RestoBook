@@ -13,7 +13,7 @@
 <div>
     <h1>
         Search results
-        <jsp:useBean id="restaurant" scope="request" class="domain.Restaurant" />
+        <jsp:useBean id="restaurant" scope="session" class="domain.Restaurant"></jsp:useBean>
         <jsp:useBean id="pricelist" scope="request" class="domain.PriceList" ></jsp:useBean>
     </h1> 
 </div>
