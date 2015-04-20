@@ -8,13 +8,19 @@
 
 <li><a href="index.jsp">Home</a></li>
 <li><a href="<%= request.getContextPath()%>/RestoWeb?action=displayResto">I Feel Lucky</a></li>
-    <jsp:useBean name="customer" scope="request" class="domain.Customer">
 
 <%@include file="_navBar.jsp" %>
+<jsp:useBean id="customer" scope="session" class="domain.Customer"></jsp:useBean>
+<jsp:useBean id="restaurant" scope="session" class="domain.Restaurant"></jsp:useBean>
+
 <div>
-    <h1>
-        Reservation confirmed
-        Thanks a lot
-        You'll receive confirmation on mail address: <jsp:getProperty name="customer" property="mail"></jsp:getProperty>
-    </h1> 
+    <fieldset>
+        Reservation sent to RestoBook<br>
+        Thanks a lot !<br><br>
+        You'll receive confirmation from <jsp:getProperty name="restaurant" property="name" ></jsp:getProperty><br>
+        at your mail address: <jsp:getProperty name="customer" property="mail"></jsp:getProperty><br>
+        See you soon.
+    </fieldset>
 </div>
+       
+<%@include file="_footer.jsp" %>
