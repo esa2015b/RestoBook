@@ -16,16 +16,16 @@
 						  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Advanced search <span class="caret"></span></a>
 						    <div class="dropdown-menu" style="padding: 15px; width: 250px;">
                                                         
-							  <form action="<%= request.getContextPath()%>/RestoWeb" method="post">
-                                                            <input type="hidden" name="action" value="advancedsearchResto">
+							  <form action="<%= request.getContextPath()%>/RestoWeb" method="post" role="search">
+                                                            <input type="hidden" name="action" value="advancedSearch">
                                                             <label>Restaurant name</label> <input type="text" class="form-control" name="name" placeholder="Search by name"/><br>
 							    <label>Food type</label>
 								  <select name="type" class="form-control">
-								    <option value="0">All</option>
-								    <option value="Chinesse">Chinesse</option>
-								    <option value="French">French</option>
-								    <option value="Italian">Italian</option>
-								    <option value="Turkish">Turkish</option>
+								    <option value="">All</option>
+								    <option value="chinois">Chinesse</option>
+								    <option value="français">French</option>
+								    <option value="italienne">Italian</option>
+								    <option value="turque">Turkish</option>
 								  </select><br>
 								<label>City</label> <input type="text" class="form-control" name="city" placeholder="Search by city"/><br>
 								<div align="right">

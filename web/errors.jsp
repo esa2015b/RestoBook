@@ -23,7 +23,7 @@
     <h2>
         <%! ControllerException error; %><br>
         <% error = (ControllerException)request.getAttribute("error"); %><br>
-        Intitulé: <%= error.getMessage()%>
+        Error : <%= error.getMessage()%>
     </h2>
 </div>
     

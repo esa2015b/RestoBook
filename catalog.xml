@@ -7,4 +7,6 @@
     <system systemId="http://localhost:32525/RestoBookService.svc?xsd=xsd1" uri="src/conf/xml-resources/web-service-references/RestoBookService/wsdl/localhost_32525/RestoBookService.svc.xsd_xsd1.xsd"/>
     <system systemId="http://localhost:32525/RestoBookService.svc?xsd=xsd2" uri="src/conf/xml-resources/web-service-references/RestoBookService/wsdl/localhost_32525/RestoBookService.svc.xsd_xsd2.xsd"/>
     <system systemId="http://localhost:32525/RestoBookService.svc?xsd=xsd3" uri="src/conf/xml-resources/web-service-references/RestoBookService/wsdl/localhost_32525/RestoBookService.svc.xsd_xsd3.xsd"/>
+    <system systemId="http://localhost:32525/RestoBookService.svc?xsd=xsd4" uri="src/conf/xml-resources/web-service-references/RestoBookService/wsdl/localhost_32525/RestoBookService.svc.xsd_xsd4.xsd"/>
+    <system systemId="http://localhost:32525/RestoBookService.svc?xsd=xsd5" uri="src/conf/xml-resources/web-service-references/RestoBookService/wsdl/localhost_32525/RestoBookService.svc.xsd_xsd5.xsd"/>
 </catalog>

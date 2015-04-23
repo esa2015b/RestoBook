@@ -1,4 +1,5 @@
 
+<%@page import="java.util.*"%>
 <%@page import="domain.*"%>
 <%@include file="_header.jsp" %>
 
@@ -7,9 +8,9 @@
 
 <%@include file="_navBar.jsp" %>
 
-			<%! Restaurant[] restaurants; %>
+			<%! List<Restaurant> restaurants; %>
                         
-                        <% restaurants = (Restaurant[]) request.getAttribute("restaurants"); %>
+                        <% restaurants = (List<Restaurant>) request.getAttribute("restaurants"); %>
                         
                         <% for (Restaurant restaurant: restaurants) { %>
                             <a href="<%= request.getContextPath()%>/RestoWeb?action=displayResto&id=<%= restaurant.getId()%>" class="Index">

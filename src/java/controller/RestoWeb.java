@@ -40,10 +40,19 @@ public class RestoWeb extends HttpServlet {
             *displayResto action == "I feel lucky" in navbar
             */
             if (request.getParameter("action") != null && request.getParameter("action").equals("displayResto")){
-                PersistenceMgr pm = new PersistenceMgr();
+                DummyMgr mgr = new DummyMgr();
                 
                 Restaurant restaurant = new Restaurant();
-                restaurant = pm.getRandomRestaurant();
+                int id ;
+                
+                if (request.getParameterMap().containsKey("id"))
+                {
+                    id = Integer.parseInt(request.getParameter("id"));
+                }else{
+                    id = mgr.getRdmRestaurant();
+                }
+                   
+                restaurant = mgr.getRestaurant(id);
 
                 HttpSession session = request.getSession();
                 session.setAttribute("restaurant", restaurant);
@@ -57,8 +66,28 @@ public class RestoWeb extends HttpServlet {
              * display one Restaurant search by his name in navBar
              */
             else if (request.getParameter("action") != null && request.getParameter("action").equals("searchResto")){
+                
+                List<Restaurant> restaurants = new ArrayList<Restaurant>();
+                DummyMgr mgr = new DummyMgr();
+                
                 String name = request.getParameter("name");
-                Restaurant restaurant = new Restaurant();
+                restaurants = mgr.getRestaurantByName(name);
+                    
+                if (restaurants.isEmpty()){
+                    ControllerException error = new ControllerException("nameResto", "please input any character.");
+                    request.setAttribute("error", error);
+                    RequestDispatcher view = request.getRequestDispatcher("errors.jsp");
+                    view.forward(request, response);
+                }else{
+                    HttpSession session = request.getSession();
+                    session.setAttribute("restaurants", restaurants);
+                    request.setAttribute("restaurants", restaurants); 
+
+                    RequestDispatcher view = request.getRequestDispatcher("searchResults.jsp");
+                    view.forward(request, response);
+                }
+                
+                /*
                 HttpSession session = request.getSession();
                 
                 //if the restaurant's name input is null 
@@ -100,11 +129,38 @@ public class RestoWeb extends HttpServlet {
                         view.forward(request, response);
                     }
                 }
+                */
             }
             /**
              * display data for a reservation
              */
-            
+            else if (request.getParameter("action") != null && request.getParameter("action").equals("advancedSearch")){
+                
+                
+                List<Restaurant> restaurants = new ArrayList<Restaurant>();
+                DummyMgr mgr = new DummyMgr();
+                
+                String name = request.getParameter("name");
+                String type = request.getParameter("type");
+                String city = request.getParameter("city");
+                
+                restaurants = mgr.getRestaurantAdvanced(name,type,city);
+                    
+                if (restaurants.isEmpty()){
+                    ControllerException error = new ControllerException("nameResto", "please input any character.");
+                    request.setAttribute("error", error);
+                    RequestDispatcher view = request.getRequestDispatcher("errors.jsp");
+                    view.forward(request, response);
+                }else{
+                    HttpSession session = request.getSession();
+                    session.setAttribute("restaurants", restaurants);
+                    request.setAttribute("restaurants", restaurants); 
+
+                    RequestDispatcher view = request.getRequestDispatcher("searchResults.jsp");
+                    view.forward(request, response);
+                }
+                
+            }
             else if (request.getParameter("action") != null && request.getParameter("action").equals("sendReservation")){
                 
                 Customer customer = new Customer();

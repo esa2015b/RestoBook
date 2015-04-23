@@ -26,28 +26,60 @@ public class Owner {
     public Owner(){
         
     }
-    
-    public int getId(){
-        return this.Id;
+
+    /**
+     * @return the Id
+     */
+    public int getId() {
+        return Id;
     }
-    
-    public void setId(int Id){
-        this.Id=Id;
+
+    /**
+     * @param Id the Id to set
+     */
+    public void setId(int Id) {
+        this.Id = Id;
     }
-    
-    public String getFirstName(){
-        return this.FirstName;
+
+    /**
+     * @return the FirstName
+     */
+    public String getFirstName() {
+        return FirstName;
     }
-    
-    public void setFirstName(){
-        this.FirstName=FirstName;
+
+    /**
+     * @param FirstName the FirstName to set
+     */
+    public void setFirstName(String FirstName) {
+        this.FirstName = FirstName;
     }
-    
-    public boolean getIsEnable(){
-        return this.IsEnable;
+
+    /**
+     * @return the LastName
+     */
+    public String getLastName() {
+        return LastName;
     }
-    
-    public void setIsEnable(){
-        this.IsEnable=IsEnable;
-    }   
+
+    /**
+     * @param LastName the LastName to set
+     */
+    public void setLastName(String LastName) {
+        this.LastName = LastName;
+    }
+
+    /**
+     * @return the IsEnable
+     */
+    public boolean isIsEnable() {
+        return IsEnable;
+    }
+
+    /**
+     * @param IsEnable the IsEnable to set
+     */
+    public void setIsEnable(boolean IsEnable) {
+        this.IsEnable = IsEnable;
+    }
 }

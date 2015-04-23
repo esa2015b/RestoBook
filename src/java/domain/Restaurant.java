@@ -5,6 +5,8 @@
  */
 package domain;
 
+import java.util.*;
+
 /**
  *
  * @author Thibaut
@@ -21,11 +23,12 @@ public class Restaurant {
     private String PictureLocation;
     private boolean IsEnable;
     private boolean IsPremium;
-    private PriceList[] PriceList;
-    private Employee[] Employee;
+    private List<PriceList> PriceList;
+    private List<Employee> Employee;
     private FoodType FoodType;
+    private Owner owner;
     
-    public Restaurant (int Id, String Name, String Mail, String Phone, String Description, int PlaceQuantity, String DayOfClosing, String PictureLocation, boolean IsEnable, boolean IsPremium, PriceList[] PriceList, Employee[] Employee, FoodType FoodType){
+    public Restaurant (int Id, String Name, String Mail, String Phone, String Description, int PlaceQuantity, String DayOfClosing, String PictureLocation, boolean IsEnable, boolean IsPremium, List<PriceList> PriceList, List<Employee> Employee, FoodType FoodType, Owner owner){
         this.Id=Id;
         this.Name=Name;
         this.Mail=Mail;
@@ -39,6 +42,7 @@ public class Restaurant {
         this.PriceList=PriceList;
         this.Employee=Employee;
         this.FoodType=FoodType;
+        this.owner=owner;
     }
     
     public Restaurant(){
@@ -188,28 +192,28 @@ public class Restaurant {
     /**
      * @return the PriceList
      */
-    public PriceList[] getPriceList() {
+    public List<PriceList> getPriceList() {
         return PriceList;
     }
 
     /**
      * @param PriceList the PriceList to set
      */
-    public void setPriceList(PriceList[] PriceList) {
+    public void setPriceList(List<PriceList> PriceList) {
         this.PriceList = PriceList;
     }
 
     /**
      * @return the Employee
      */
-    public Employee[] getEmployee() {
+    public List<Employee> getEmployee() {
         return Employee;
     }
 
     /**
      * @param Employee the Employee to set
      */
-    public void setEmployee(Employee[] Employee) {
+    public void setEmployee(List<Employee> Employee) {
         this.Employee = Employee;
     }
 
@@ -225,6 +229,20 @@ public class Restaurant {
      */
     public void setFoodType(FoodType FoodType) {
         this.FoodType = FoodType;
+    }
+
+    /**
+     * @return the owner
+     */
+    public Owner getOwner() {
+        return owner;
+    }
+
+    /**
+     * @param owner the owner to set
+     */
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
    
 }
