@@ -5,7 +5,7 @@
  */
 package model;
 
-import domain.Restaurant;
+import domain.*;
 import java.util.List;
 
 /**
@@ -14,8 +14,8 @@ import java.util.List;
  */
 public interface IDummyAble {
 //    public Restaurant[] getAllRestaurant();
-    public int getRdmRestaurant();
-    public Restaurant getRestaurant(int id);
-    public List<Restaurant> getRestaurantByName (String name);
-    public List<Restaurant> getRestaurantAdvanced (String name, String type, String city);
+    public DisplayRestaurant getRdmRestaurant();
+    public DisplayRestaurant getRestaurant(int id);
+    public List<LightRestaurant> getRestaurantByName (String name);
+    public List<LightRestaurant> getRestaurantAdvanced (String name, String type, String city);
 }

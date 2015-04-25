@@ -8,11 +8,11 @@
 
 <%@include file="_navBar.jsp" %>
 
-			<%! List<Restaurant> restaurants; %>
+			<%! List<LightRestaurant> restaurants; %>
                         
-                        <% restaurants = (List<Restaurant>) request.getAttribute("restaurants"); %>
+                        <% restaurants = (List<LightRestaurant>) request.getAttribute("restaurants"); %>
                         
-                        <% for (Restaurant restaurant: restaurants) { %>
+                        <% for (LightRestaurant restaurant: restaurants) { %>
                             <a href="<%= request.getContextPath()%>/RestoWeb?action=displayResto&id=<%= restaurant.getId()%>" class="Index">
                                  <div class="Lign">
                                     <div class="PictureResults">
@@ -21,7 +21,7 @@
                                     <div class="TechResults">
                                         <b><%= restaurant.getName()%></b>
                                         <ul>
-                                            <li><%= restaurant.getFoodType().getName() %></li>
+                                            <li><%= restaurant.getFoodTypeName()%></li>
                                             <li>*City*</li>
                                             <li><%= restaurant.getDescription()%></li>
                                         </ul>

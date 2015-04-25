@@ -7,8 +7,8 @@
 						
 <%@include file="_navBar.jsp" %>
 
-                                <%! Restaurant restaurant; %>
-                                <% restaurant = (Restaurant) request.getAttribute("restaurant"); %>
+                                <%! DisplayRestaurant restaurant; %>
+                                <% restaurant = (DisplayRestaurant) request.getAttribute("restaurant"); %>
                                 
 				<!-- Restaurant picture -->
 				<div class="Picture">
@@ -22,7 +22,7 @@
                                     <%= restaurant.getName()%>
 				</div>
 				<div class="Lign">
-                                    <%= restaurant.getFoodType().getName() %>
+                                    <%= restaurant.getFoodTypeName() %>
 				</div>
 				<div class="Lign">
                                     <%= restaurant.getDescription()%>

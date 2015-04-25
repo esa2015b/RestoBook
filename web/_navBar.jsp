@@ -23,7 +23,7 @@
 								  <select name="type" class="form-control">
 								    <option value="">All</option>
 								    <option value="chinois">Chinesse</option>
-								    <option value="français">French</option>
+								    <option value="fran">French</option>
 								    <option value="italienne">Italian</option>
 								    <option value="turque">Turkish</option>
 								  </select><br>

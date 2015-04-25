@@ -28,23 +28,6 @@ public class Restaurant {
     private FoodType FoodType;
     private Owner owner;
     
-    public Restaurant (int Id, String Name, String Mail, String Phone, String Description, int PlaceQuantity, String DayOfClosing, String PictureLocation, boolean IsEnable, boolean IsPremium, List<PriceList> PriceList, List<Employee> Employee, FoodType FoodType, Owner owner){
-        this.Id=Id;
-        this.Name=Name;
-        this.Mail=Mail;
-        this.Phone=Phone;
-        this.Description=Description;
-        this.PlaceQuantity=PlaceQuantity;
-        this.DayOfClosing=DayOfClosing;
-        this.PictureLocation=PictureLocation;
-        this.IsEnable=IsEnable;
-        this.IsPremium=IsPremium;
-        this.PriceList=PriceList;
-        this.Employee=Employee;
-        this.FoodType=FoodType;
-        this.owner=owner;
-    }
-    
     public Restaurant(){
         
     }

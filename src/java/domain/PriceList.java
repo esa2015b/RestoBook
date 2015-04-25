@@ -16,15 +16,7 @@ public class PriceList {
     private int MaximumPrice;
     private int MinimumPrice;
     private boolean IsEnabled;
-    
-    public PriceList(int Id, String Description, int MaximumPrice, int MinimumPrice, boolean IsEnabled){
-        this.Id=Id;
-        this.Description=Description;
-        this.MaximumPrice=MaximumPrice;
-        this.MinimumPrice=MinimumPrice;
-        this.IsEnabled=IsEnabled;
-    }
-    
+   
     public PriceList(){
         
     }

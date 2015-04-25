@@ -4,9 +4,17 @@
         <servlet-name>RestoWeb</servlet-name>
         <servlet-class>controller.RestoWeb</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Mapper</servlet-name>
+        <servlet-class>domain.Mapper</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RestoWeb</servlet-name>
         <url-pattern>/RestoWeb</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Mapper</servlet-name>
+        <url-pattern>/Mapper</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

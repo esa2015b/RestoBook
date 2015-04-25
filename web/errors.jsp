@@ -27,3 +27,5 @@
     </h2>
 </div>
     
+<%@include file="_footer.jsp" %>
+    
