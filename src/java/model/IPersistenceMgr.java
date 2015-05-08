@@ -4,7 +4,7 @@ import domain.*;
 import java.util.List;
 
 /**
- * TO BE IMPLEMENTED when Web Service will be completed
+ * 
  * @author Jean-Louis
  */
 public interface IPersistenceMgr {
@@ -18,5 +18,37 @@ public interface IPersistenceMgr {
     public Restaurant getRandomRestaurant ();
     
     public Restaurant getRestaurantbyId(int restaurantid);
+    
+    public DisplayRestaurant getRestaurant(int id);
+    
+    /**
+     *
+     * @return
+     */
+    public DisplayRestaurant getRdmRestaurant();
+    
+    /**
+     *
+     * @param name
+     * @return
+     */
+    public List<LightRestaurant> getRestaurantByName (String name);
+    
+    /**
+     *
+     * @param name
+     * @param type
+     * @param city
+     * @return
+     */
+    public List<LightRestaurant> getRestaurantAdvanced (String name, String type, String city);
+    
+    /**
+     * Get all restaurants of a given food type.
+     * @param ftEnum : The requested food type.
+     * @param numberOfElements : The number of elements you want to receive. For all elements, send 0.
+     * @return : An arraylist of lightrestaurant objects.
+     */
+    public List<LightRestaurant> getLightRestaurantsByFoodType(FoodTypeEnum ftEnum, int numberOfElements);
     
 }

@@ -11,41 +11,66 @@ package domain;
  */
 public class Customer {
     
-    private int Id;
-    private String Mail;
-    private String Phone;
+    // <editor-fold defaultstate="collapsed" desc="MEMBERS">
+    private int id;
+    private String mail;
+    private String phone;
+    private String name;
+    // </editor-fold>
     
-    public Customer(int Id, String Mail, String Phone){
-        this.Id=Id;
-        this.Mail=Mail;
-        this.Phone=Phone;
-    }
     
+    // <editor-fold defaultstate="collapsed" desc="CONSTRUCTORS">
     public Customer(){
         
     }
     
-    public int getId(){
-        return this.Id;
+    public Customer(int Id, String Mail, String Phone){
+        this.id = Id;
+        this.mail = Mail;
+        this.phone = Phone;
     }
     
-    public void setId(int Id){
-        this.Id=Id;
+    public Customer(int id, String mail, String phone, String name)
+    {
+        this.id = id;
+        this.mail = mail;
+        this.phone = phone;
+        this.name = name;
+    }
+    // </editor-fold>
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="PROPERTIES">
+    public int getId(){
+        return this.id;
+    }
+    
+    public void setId(int id){
+        this.id = id;
+    }
+    
+    public String getName(){
+        return this.name;
+    }
+    
+    public void setName(String name){
+        this.name = name;
     }
     
     public String getMail(){
-        return Mail;
+        return mail;
     }
     
-    public void setMail(String Mail){
-        this.Mail=Mail;
+    public void setMail(String mail){
+        this.mail = mail;
     }
     
     public String getPhone(){
-        return this.Phone;
+        return this.phone;
     }
     
-    public void setPhone(String Phone){
-        this.Phone=Phone;
+    public void setPhone(String phone){
+        this.phone = phone;
     }
+    // </editor-fold>
 }

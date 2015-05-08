@@ -39,7 +39,7 @@
 <div>
     <fieldset style="float: right">
         <legend>Reservation</legend>
-            <form method="POST" action="<%= request.getContextPath()%>/RestoWeb">
+            <form method="POST" action="<%= request.getContextPath()%>/Display">
                 
                 Reservation date:<input type="date" name="reservationdate"><br>
                 Service: <input type="text" name="service" value="Midi"><br>
@@ -47,8 +47,8 @@
                 Customer phone: <input type="tel" name="customerphone" value="0473/629.626."><br>
                 Customer mail: <input type="text" name="customermail" value="jlmoiny@gmail.com"><br>
                 <br>
-                <input type="submit" value="Book">
-                <input type="hidden" name="action" value="sendReservation">
+                <input type="submit" value="Book" value="newReservation" />
+                <input type="hidden" name="action" value="sendReservation" />
                 
             </form>
     </fieldset>   

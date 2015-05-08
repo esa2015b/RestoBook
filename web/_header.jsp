@@ -9,7 +9,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
         <link rel="stylesheet" href="css/custom.css" type="text/css" />
-
+        <link rel="stylesheet" href="css/bootstrap-datepicker.css" type="text/css"/>
         <title>Restobook</title>
 		
     </head>

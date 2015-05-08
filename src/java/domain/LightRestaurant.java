@@ -12,11 +12,11 @@ import java.util.List;
  * @author Thibaut
  */
 public class LightRestaurant {
-    private int Id;
-    private String Name;
-    private String Description;
-    private String PictureLocation;
-    private String FoodTypeName;
+    private int id;
+    private String name;
+    private String description;
+    private String pictureLocation;
+    private String foodTypeName;
 
     public LightRestaurant(){
         
@@ -26,69 +26,69 @@ public class LightRestaurant {
      * @return the Id
      */
     public int getId() {
-        return Id;
+        return id;
     }
 
     /**
      * @param Id the Id to set
      */
     public void setId(int Id) {
-        this.Id = Id;
+        this.id = Id;
     }
 
     /**
      * @return the Name
      */
     public String getName() {
-        return Name;
+        return name;
     }
 
     /**
      * @param Name the Name to set
      */
     public void setName(String Name) {
-        this.Name = Name;
+        this.name = Name;
     }
 
     /**
      * @return the Description
      */
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     /**
      * @param Description the Description to set
      */
     public void setDescription(String Description) {
-        this.Description = Description;
+        this.description = Description;
     }
 
     /**
      * @return the PictureLocation
      */
     public String getPictureLocation() {
-        return PictureLocation;
+        return pictureLocation;
     }
 
     /**
      * @param PictureLocation the PictureLocation to set
      */
     public void setPictureLocation(String PictureLocation) {
-        this.PictureLocation = PictureLocation;
+        this.pictureLocation = PictureLocation;
     }
 
     /**
      * @return the FoodTypeName
      */
     public String getFoodTypeName() {
-        return FoodTypeName;
+        return foodTypeName;
     }
 
     /**
      * @param FoodTypeName the FoodTypeName to set
      */
     public void setFoodTypeName(String FoodTypeName) {
-        this.FoodTypeName = FoodTypeName;
+        this.foodTypeName = FoodTypeName;
     }
 }

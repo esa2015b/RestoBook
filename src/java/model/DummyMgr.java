@@ -15,8 +15,10 @@ import org.tempuri.RestoBookService;
  *
  * @author Thibaut
  */
-public class DummyMgr implements IDummyAble{
+public class DummyMgr implements IDummyAble
+{
     
+    // <editor-fold defaultstate="collapsed" desc="PUBLIC METHODS">
     public DisplayRestaurant getRestaurant(int id){
         
         DisplayRestaurant displayResto = new DisplayRestaurant();
@@ -28,7 +30,6 @@ public class DummyMgr implements IDummyAble{
         
     }
     
-    
     public DisplayRestaurant getRdmRestaurant(){
        
         DisplayRestaurant displayResto = new DisplayRestaurant();
@@ -39,6 +40,7 @@ public class DummyMgr implements IDummyAble{
         return displayResto;
          
     }
+    
     public List<LightRestaurant> getRestaurantByName (String name)
     {
         List<LightRestaurant> restaurants = new ArrayList<LightRestaurant>();
@@ -67,7 +69,10 @@ public class DummyMgr implements IDummyAble{
         
         return restaurants;
     }
+    //</editor-fold>
     
+    
+    // <editor-fold defaultstate="collapsed" desc="PRIVATE METHODS">
     private LightRestaurant mapLightRestaurant (org.datacontract.schemas._2004._07.restobook_common_model.LightRestaurant wcf){
         
         LightRestaurant lightResto = new LightRestaurant();
@@ -168,6 +173,7 @@ public class DummyMgr implements IDummyAble{
                         
         return result;
     }
+    //</editor-fold>
 
 }
    

@@ -5,6 +5,8 @@
  */
 package domain;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -13,109 +15,134 @@ import java.util.Date;
  */
 public class Reservation {
 
-    private int Id;
-    private int CustomerId;
-    private int ServiceId;
-    private Date ReservationDate;
-    private String Service;
-    private int PlaceQuantity;
-    private boolean RestoConfirmation;
-    private Date RestoConfirmationDate;
-    private String RestoComments;
-    private boolean IsEnable;
+    // <editor-fold defaultstate="collapsed" desc="MEMBERS">
+    private int id;
+    private int customerId;
+    private int serviceId;
+    private Date reservationDate;
+    private String service;
+    private int placeQuantity;
+    private boolean restoConfirmation;
+    private Date restoConfirmationDate;
+    private String restoComments;
+    private String reservationComments;
+    private boolean isEnable;
+    // </editor-fold>
     
-    /*public Reservation(int Id, int CustomerId, int ServiceId, Date ReservationDate, String Service, int PlaceQuantity){
-        this.Id=Id;
-        this.CustomerId=CustomerId;
-        this.ServiceId=ServiceId;
-        this.ReservationDate=ReservationDate;
-        this.Service=Service;
-        this.PlaceQuantity=PlaceQuantity;
-    }*/
     
+    // <editor-fold defaultstate="collapsed" desc="CONSTRUCTORS">
     public Reservation(){
         
     }
     
+    public Reservation(int id, int customerId, int serviceId, Date reservationDate, String service, int placeQuantity, String reservationComments){
+        this.id = id;
+        this.customerId = customerId;
+        this.serviceId = serviceId;
+        this.reservationDate = reservationDate;
+        this.service = service;
+        this.placeQuantity = placeQuantity;
+        this.reservationComments = reservationComments;
+    }
+    // </editor-fold>
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="PROPERTIES">
     public int getId(){
-        return this.Id;
+        return this.id;
     }
     
-    public void setId(int Id){
-        this.Id=Id;
+    public void setId(int id){
+        this.id = id;
     }
     
     public int getCustomerId(){
-        return this.CustomerId;
+        return this.customerId;
     }
     
-    public void setCustomerId(int CustomerId){
-        this.CustomerId=CustomerId;
+    public void setCustomerId(int customerId){
+        this.customerId = customerId;
     }
     
     public int getServiceId(){
-        return this.ServiceId;
+        return this.serviceId;
     }
     
-    public void setServiceId(int ServiceId){
-        this.ServiceId=ServiceId;
+    public void setServiceId(int serviceId){
+        this.serviceId = serviceId;
     }
     
     public Date getReservationDate(){
-        return ReservationDate;
+        return reservationDate;
     }
     
-    public void setReservationDate(){
-        this.ReservationDate=ReservationDate;
+    public String getReservationDateSimple(){
+        return new SimpleDateFormat("dd/MM/yyyy").format(this.reservationDate);
+    }
+    
+    public void setReservationDate(Date reservationDate){
+        this.reservationDate = reservationDate;
     }
     
     public String getService(){
-        return this.Service;
+        return this.service;
     }
     
-    public void setService(String Service){
-        this.Service=Service;
+    public void setService(String service){
+        this.service = service;
     }
     
     public int getPlaceQuantity(){
-        return this.PlaceQuantity;
+        return this.placeQuantity;
     }
     
-    public void setPlaceQuantity(int PlaceQuantity){
-        this.PlaceQuantity=PlaceQuantity;
+    public void setPlaceQuantity(int placeQuantity){
+        this.placeQuantity = placeQuantity;
     }
     
     public boolean getRestoConfirmation(){
-        return this.RestoConfirmation;
+        return this.restoConfirmation;
     }
     
     public void setRestoConfirmation(boolean restoConfirmation){
-        this.RestoConfirmation=restoConfirmation;
+        this.restoConfirmation = restoConfirmation;
     }
     
     @SuppressWarnings("ReturnOfDateField")
     public Date getRestoConfirmationDate(){
-        return this.RestoConfirmationDate;
+        return this.restoConfirmationDate;
     }
     
     @SuppressWarnings("AssignmentToDateFieldFromParameter")
-    public void setRestoConfirmationDate(Date RestoConfirmationDate){
-        this.RestoConfirmationDate=RestoConfirmationDate;
+    public void setRestoConfirmationDate(Date restoConfirmationDate){
+        this.restoConfirmationDate = restoConfirmationDate;
     }
     
     public String getRestoComments (){
-        return this.RestoComments;
+        return this.restoComments;
     }
     
-    public void setRestoComments(String RestoComments){
-        this.RestoComments=RestoComments;
+    public void setRestoComments(String restoComments){
+        this.restoComments = restoComments;
     }
     
     public boolean getIsEnable(){
-        return this.IsEnable;
+        return this.isEnable;
     }
     
-    public void setIsEnable(boolean IsEnable){
-        this.IsEnable=IsEnable;
+    public void setIsEnable(boolean isEnable){
+        this.isEnable = isEnable;
     }
+
+    public String getReservationComments()
+    {
+        return this.reservationComments;
+    }
+    
+    public void setReservationComments(String reservationComments)
+    {
+        this.reservationComments = reservationComments;
+    }
+    // </editor-fold>
+    
 }

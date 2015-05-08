@@ -1,5 +1,7 @@
 package controller;
 
+import com.microsoft.schemas._2003._10.serialization.arrays.ArrayOfint;
+import com.microsoft.schemas._2003._10.serialization.arrays.ObjectFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -8,21 +10,34 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import domain.*;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashSet;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import model.*;
+import org.tempuri.RestoBookService;
 
 /**
  *
  * @author Thibaut
  */
 public class RestoWeb extends HttpServlet {
-
+    
+    // <editor-fold defaultstate="collapsed" desc="PROPERTIES">
+    private IPersistenceMgr persistenceMgr;
+    private IDummyAble dummyMgr;
+    // </editor-fold>
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="CONSTRUCTOR">
+    public void init() throws ServletException
+    {
+        this.persistenceMgr = new PersistenceMngr();
+        this.dummyMgr = new DummyMgr();
+    }
+    // </editor-fold>
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="PUBLIC METHODS">
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -35,11 +50,32 @@ public class RestoWeb extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
+            
+            if (request.getParameter("action") == null)
+            {
+                //ArrayOfint ints = new ObjectFactory().createArrayOfint();
+                
+                // Call the restaurantManager and get the diferent lists to show in the sliders
+                // and fetch 3 per categorie.
+                List<LightRestaurant> chineseRestaurants = this.persistenceMgr.getLightRestaurantsByFoodType(FoodTypeEnum.Chinese,3);
+                List<LightRestaurant> frenchRestaurants = this.persistenceMgr.getLightRestaurantsByFoodType(FoodTypeEnum.French,3);
+                List<LightRestaurant> italianRestaurants = this.persistenceMgr.getLightRestaurantsByFoodType(FoodTypeEnum.Italian,3);
+                List<LightRestaurant> turkishRestaurants = this.persistenceMgr.getLightRestaurantsByFoodType(FoodTypeEnum.Turkish,3);
+                
+                /*HttpSession session = request.getSession();*/
+                request.setAttribute("chineseRestaurants", chineseRestaurants);
+                request.setAttribute("frenchRestaurants", frenchRestaurants);
+                request.setAttribute("italianRestaurants", italianRestaurants);
+                request.setAttribute("turkishRestaurants", turkishRestaurants);
 
+                RequestDispatcher view = request.getRequestDispatcher("home.jsp");
+                view.forward(request, response);
+            }
             /**
             *displayResto action == "I feel lucky" in navbar
             */
-            if (request.getParameter("action") != null && request.getParameter("action").equals("displayResto")){
+            else if (request.getParameter("action") != null && request.getParameter("action").equals("displayResto"))
+            {
                 DummyMgr mgr = new DummyMgr();
                 
                 DisplayRestaurant restaurant = new DisplayRestaurant();
@@ -53,7 +89,7 @@ public class RestoWeb extends HttpServlet {
 
                 HttpSession session = request.getSession();
                 session.setAttribute("restaurant", restaurant);
-                request.setAttribute("restaurant", restaurant); 
+                request.setAttribute("restaurant", restaurant);
 
                 RequestDispatcher view = request.getRequestDispatcher("display.jsp");
                 view.forward(request, response);
@@ -62,8 +98,8 @@ public class RestoWeb extends HttpServlet {
             /**
              * display one Restaurant search by his name in navBar
              */
-            else if (request.getParameter("action") != null && request.getParameter("action").equals("searchResto")){
-                
+            else if (request.getParameter("action") != null && request.getParameter("action").equals("searchResto"))
+            {    
                 List<LightRestaurant> restaurants = new ArrayList<LightRestaurant>();
                 DummyMgr mgr = new DummyMgr();
                 
@@ -87,9 +123,8 @@ public class RestoWeb extends HttpServlet {
             /**
              * display data for a reservation
              */
-            else if (request.getParameter("action") != null && request.getParameter("action").equals("advancedSearch")){
-                
-                
+            else if (request.getParameter("action") != null && request.getParameter("action").equals("advancedSearch"))
+            {
                 List<LightRestaurant> restaurants = new ArrayList<LightRestaurant>();
                 DummyMgr mgr = new DummyMgr();
                 
@@ -114,8 +149,8 @@ public class RestoWeb extends HttpServlet {
                 }
                 
             }
-            else if (request.getParameter("action") != null && request.getParameter("action").equals("sendReservation")){
-                
+            else if (request.getParameter("action") != null && request.getParameter("action").equals("sendReservation"))
+            {
                 Customer customer = new Customer();
                 Reservation reservation = new Reservation();
                 HttpSession session = request.getSession();
@@ -123,10 +158,12 @@ public class RestoWeb extends HttpServlet {
                 //datas coming from form in page "displayResults"
                 customer.setMail(request.getParameterValues("customermail")[0]);
                 customer.setPhone(request.getParameterValues("customerphone")[0]);
+                
+                
                 reservation.setPlaceQuantity(Integer.parseInt(request.getParameterValues("placequantity")[0]));
                 //reservation.setReservationDate((Date)request.getParameterValues("reservationdate")[0]);
                 reservation.setService(request.getParameterValues("service")[0]);
-
+                
                 //request.setAttribute("customer", customer);
                 session.setAttribute("customer", customer);
                 //request.setAttribute("reservation", reservation);
@@ -139,8 +176,8 @@ public class RestoWeb extends HttpServlet {
            /**
             * must be update to send datas to DB
             */
-           else if (request.getParameter("action") != null && request.getParameter("action").equals("confirmReservation")){              
-   
+           else if (request.getParameter("action") != null && request.getParameter("action").equals("confirmReservation"))
+           {
                 RequestDispatcher view = request.getRequestDispatcher("displayConfirmation.jsp");
                 view.forward(request, response);
            }
@@ -148,16 +185,24 @@ public class RestoWeb extends HttpServlet {
            /**
             * Must be implemented with webservice
             */
-            else if (request.getParameter("action") != null && request.getParameter("action").equals("advancedsearchResto")){  
+            else if (request.getParameter("action") != null && request.getParameter("action").equals("advancedsearchResto"))
+            {
                 RequestDispatcher view = request.getRequestDispatcher("displayResults.jsp");
                 view.forward(request, response);  
-            }
-                    
-        } finally {            
+            }            
+        }
+        catch(Exception e)
+        {
+            int why = 25;
+        }
+        finally
+        {
             out.close();
         }
     }
-
+    // </editor-fold>
+    
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.

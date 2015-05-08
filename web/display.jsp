@@ -2,7 +2,7 @@
 
 <%@include file="_header.jsp" %>
 
-						<li><a href="index.jsp">Home</a></li>
+						<li><a href="<%= request.getContextPath()%>/Home">Home</a></li>
 						<li class="active"><a href="<%= request.getContextPath()%>/RestoWeb?action=displayResto">I Feel Lucky</a></li>
 						
 <%@include file="_navBar.jsp" %>
@@ -28,7 +28,7 @@
                                     <%= restaurant.getDescription()%>
 				</div>
 				<div class="Lign">
-                                    Place Quantity : <%= restaurant.getPlaceQuantity()%>
+                                    Available seats : <%= restaurant.getPlaceQuantity()%>
 				</div>
 				<div class="Lign">
                                     Contact :
@@ -42,9 +42,15 @@
                                     Closed : <%= restaurant.getDayOfClosing()%>
 				</div>
 				
-				<div style="float: right;">
-                                    <button type="submit" class="btn btn-default">Book</button>
-				</div>
+                                <Form action='<%= request.getContextPath()%>/Display' method='POST'>
+                                    <div style="float: right;">
+                                        <button type="submit" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-book"></span>
+                                            <span>Book</span>
+                                        </button>
+                                        <input type="hidden" name="action" value="newReservation"/>
+                                    </div>
+                                </form>
 				</div>
 				<!-- End Restaurant Spec -->
 				
