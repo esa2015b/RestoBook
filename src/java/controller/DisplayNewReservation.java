@@ -115,14 +115,18 @@ public class DisplayNewReservation extends HttpServlet
                         view.forward(request, response);
                     }
                     
-                    
                     // Create a valid reservation object
+                    
                     
                     // Call the reservationManager
                     
+                    
                     // Return to the page in cas of problem
                     
+                    
                     // Go to the successful page in case of creation
+                    
+                    
                 }
 
                 if (session.getAttribute("customer") != null)
