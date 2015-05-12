@@ -8,7 +8,8 @@ package model;
 import java.util.List;
 import java.util.ArrayList;
 import domain.*;
-import java.util.Random;
+import java.util.Calendar;
+import java.util.Locale;
 import org.tempuri.RestoBookService;
 
 /**
@@ -33,8 +34,8 @@ public class DummyMgr implements IDummyAble
     public DisplayRestaurant getRdmRestaurant(){
        
         DisplayRestaurant displayResto = new DisplayRestaurant();
-        RestoBookService wcf = new RestoBookService();
         
+        RestoBookService wcf = new RestoBookService();
         displayResto = this.mapDisplayRestaurant(wcf.getBasicHttpBindingIRestoBookService().getRandomRestaurant());
         
         return displayResto;
@@ -46,9 +47,11 @@ public class DummyMgr implements IDummyAble
         List<LightRestaurant> restaurants = new ArrayList<LightRestaurant>();
         RestoBookService wcf = new RestoBookService();
         
-        for(int i = 0; i < wcf.getBasicHttpBindingIRestoBookService().getRestaurantByName(name).getRestaurant().size(); i++)
+        List<org.datacontract.schemas._2004._07.restobook_common_model.Restaurant> wcfRestos = wcf.getBasicHttpBindingIRestoBookService().getRestaurantByName(name).getRestaurant();
+        
+        for(int i = 0; i < wcfRestos.size(); i++)
         {
-            LightRestaurant lightResto = this.mapLightRestaurant(wcf.getBasicHttpBindingIRestoBookService().getLightRestaurantByName(name).getLightRestaurant().get(i));
+            LightRestaurant lightResto = this.mapLightRestaurant(wcfRestos.get(i));
 
             restaurants.add(lightResto);
         }
@@ -60,9 +63,12 @@ public class DummyMgr implements IDummyAble
     {
         List<LightRestaurant> restaurants = new ArrayList<LightRestaurant>();
         RestoBookService wcf = new RestoBookService();
-        for(int i = 0; i < wcf.getBasicHttpBindingIRestoBookService().getLightRestaurantAdvanced(name, type, city).getLightRestaurant().size(); i++)
+        
+        List<org.datacontract.schemas._2004._07.restobook_common_model.LightRestaurant> wcfRestos = wcf.getBasicHttpBindingIRestoBookService().getLightRestaurantAdvanced(name, type, city).getLightRestaurant();
+        
+        for(int i = 0; i < wcfRestos.size(); i++)
         {
-            LightRestaurant lightResto = this.mapLightRestaurant(wcf.getBasicHttpBindingIRestoBookService().getLightRestaurantAdvanced(name, type, city).getLightRestaurant().get(i));
+            LightRestaurant lightResto = this.mapLightRestaurant(wcfRestos.get(i));
             
             restaurants.add(lightResto);
         }
@@ -82,10 +88,27 @@ public class DummyMgr implements IDummyAble
         lightResto.setFoodTypeName(wcf.getFoodTypeName());
         lightResto.setPictureLocation(wcf.getPictureLocation());
         lightResto.setDescription(wcf.getDescription());
+        lightResto.setCity(wcf.getCity());
         
         return lightResto;
         
     }
+    
+    private LightRestaurant mapLightRestaurant (org.datacontract.schemas._2004._07.restobook_common_model.Restaurant wcf){
+        
+        LightRestaurant lightResto = new LightRestaurant();
+        
+        lightResto.setId(wcf.getId());
+        lightResto.setName(wcf.getName());
+        lightResto.setFoodTypeName(wcf.getFoodType().getName());
+        lightResto.setPictureLocation(wcf.getPictureLocation());
+        lightResto.setDescription(wcf.getDescription());
+        
+        return lightResto;
+        
+    }
+    
+    
      
     private DisplayRestaurant mapDisplayRestaurant (org.datacontract.schemas._2004._07.restobook_common_model.Restaurant wcf){
         
@@ -99,18 +122,49 @@ public class DummyMgr implements IDummyAble
         displayResto.setPlaceQuantity(wcf.getPlaceQuantity());
         displayResto.setDayOfClosing(wcf.getDayOfClosing());
         displayResto.setPictureLocation(wcf.getPictureLocation());
-        displayResto.setFoodTypeName(wcf.getFoodType().getName());
+        displayResto.setFoodTypeName(wcf.getFoodType() == null ? "" : wcf.getFoodType().getName());
+        Address address = wcf.getAddresses().getAddress() == null ? new Address() : new Address(wcf.getAddresses().getAddress().get(0).getId(),
+                                        wcf.getId(),
+                                        wcf.getAddresses().getAddress().get(0).getStreet().getValue(),
+                                        wcf.getAddresses().getAddress().get(0).getNumber().getValue(), 
+                                        wcf.getAddresses().getAddress().get(0).getZipCode().getValue(), 
+                                        wcf.getAddresses().getAddress().get(0).getCity().getValue(), 
+                                        wcf.getAddresses().getAddress().get(0).getCountry().getValue(),
+                                        true, 
+                                        true);
+        displayResto.setAddress(address);
+        ArrayList<Service> services = new ArrayList<>();
+        
+        if (wcf.getServices() != null)
+        {
+            for (int i = 0; i < wcf.getServices().getService().size(); i++)
+            {   
+//                Calendar c = wcf.getServices().getService().get(i).getServiceDate().toGregorianCalendar();
+//                String dayOfWeek = c.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.FRENCH);
+                
+                Service s = new Service(wcf.getServices().getService().get(i).getId(), 
+                                        wcf.getServices().getService().get(i).getServiceDate().toGregorianCalendar().getTime(),
+                                        wcf.getServices().getService().get(i).getServiceDate().toGregorianCalendar().getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.FRENCH),
+                                        wcf.getServices().getService().get(i).getTypeService(), 
+                                        wcf.getServices().getService().get(i).getBeginShift(),
+                                        wcf.getServices().getService().get(i).getEndShift(),
+                                        wcf.getServices().getService().get(i).getPlaceQuantity(),
+                                        wcf.getServices().getService().get(i).isIsEnabled());
+
+                services.add(s);
+            }
+        }
+        displayResto.setServices(services);
         
         return displayResto;
-        
     }
      
     private Restaurant mapFullRestaurant (org.datacontract.schemas._2004._07.restobook_common_model.Restaurant wcfRep){
         Restaurant result = new Restaurant();
         FoodType foodType = new FoodType();
         Owner owner = new Owner();
-        List<Employee> emp = new ArrayList<Employee>();
-        List<PriceList> pl = new ArrayList<PriceList>();
+        List<Employee> emp = new ArrayList<>();
+        List<PriceList> pl = new ArrayList<>();
         
         // Assignation to Restaurant and FoodType from WCF.
         result.setDayOfClosing(wcfRep.getDayOfClosing());

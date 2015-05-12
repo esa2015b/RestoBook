@@ -8,20 +8,24 @@
 <%@page import="domain.*"%>
 <%@include file="_header.jsp" %>
 
-<li><a href="index.jsp">Home</a></li>
-<li><a href="<%= request.getContextPath()%>/RestoWeb?action=displayResto">I Feel Lucky</a></li>
-
 <%@include file="_navBar.jsp" %>
 <div>
-    <h1>
-        New reservation
-    </h1>
-</div>
-    
-<div class="container-fluid">
     <jsp:useBean id="restaurant" scope="session" class="domain.DisplayRestaurant"></jsp:useBean>
     <jsp:useBean id="customer" scope="session" class="domain.Customer"></jsp:useBean>
     <jsp:useBean id="reservation" scope="session" class="domain.Reservation"></jsp:useBean>
+    <h1>
+        New reservation - <%= restaurant.getName() %>
+    </h1>
+    <p>
+        <a href="<%= request.getContextPath()%>/RestoWeb?action=displayResto&id=<%= restaurant.getId() %>">
+            Return to <%= restaurant.getName() %> info page
+        </a>
+    </p>
+</div>
+        
+<%@include file="_errors.jsp" %>
+    
+<div class="container-fluid">
     
     <form class="form-horizontal" role="form" method="POST" action="<%= request.getContextPath()%>/DisplayNewReservation">
         

@@ -8,9 +8,6 @@
 
 <%@include file="_header.jsp" %>
 
-<li><a href="index.jsp">Home</a></li>
-<li><a href="<%= request.getContextPath()%>/RestoWeb?action=displayResto">I Feel Lucky</a></li>
-
 <%@include file="_navBar.jsp" %>
 
 <div>

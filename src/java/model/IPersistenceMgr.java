@@ -2,6 +2,7 @@ package model;
 
 import domain.*;
 import java.util.List;
+import javax.xml.datatype.DatatypeConfigurationException;
 
 /**
  * 
@@ -51,4 +52,13 @@ public interface IPersistenceMgr {
      */
     public List<LightRestaurant> getLightRestaurantsByFoodType(FoodTypeEnum ftEnum, int numberOfElements);
     
+    /**
+     * Gets the full restaurant object for a restaurant identifier.
+     * @param restaurantId : The restaurant identifier.
+     * @return : The full restaurant object.
+     */
+    public Restaurant getFullRestaurant(int restaurantId);
+    
+    
+    public boolean CreateReservation(Reservation reservation, Customer customer) throws DatatypeConfigurationException;
 }

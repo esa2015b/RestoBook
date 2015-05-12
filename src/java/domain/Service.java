@@ -13,127 +13,147 @@ import java.util.Date;
  */
 public class Service {
     
-    private int Id;
-    private Date ServiceDate;
-    private String DayOfWeek;
-    private String TypeService;
-    private int BeginShift;
-    private int EndShift;
-    private int PlaceQuantity;
-    private boolean IsEnable;
     
+    // <editor-fold defaultstate="collapsed" desc="MEMBERS">
+    private int id;
+    private Date serviceDate;
+    private String dayOfWeek;
+    private String typeService;
+    private int beginShift;
+    private int endShift;
+    private int placeQuantity;
+    private boolean isEnable;
+    // </editor-fold>
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="CONSTRUCTORS">
     public Service(){
         
     }
     
+    public Service(int id, Date serviceDate, String dayOfWeek, String typeService, int beginShift, int endShift, int availablePlaces, boolean isEnabled)
+    {
+        this.id = id;
+        this.serviceDate = serviceDate;
+        this.dayOfWeek = dayOfWeek;
+        this.typeService = typeService;
+        this.beginShift = beginShift;
+        this.endShift = endShift;
+        this.placeQuantity = availablePlaces;
+        this.isEnable = isEnabled;
+    }
+    //</editor-fold>
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="PROPERTIES">
     public int getId(){
-        return this.Id;
+        return this.id;
     }
 
     /**
      * @param Id the Id to set
      */
     public void setId(int Id) {
-        this.Id = Id;
+        this.id = Id;
     }
 
     /**
      * @return the ServiceDate
      */
     public Date getServiceDate() {
-        return ServiceDate;
+        return serviceDate;
     }
 
     /**
      * @param ServiceDate the ServiceDate to set
      */
     public void setServiceDate(Date ServiceDate) {
-        this.ServiceDate = ServiceDate;
+        this.serviceDate = ServiceDate;
     }
 
     /**
      * @return the DayOfWeek
      */
     public String getDayOfWeek() {
-        return DayOfWeek;
+        return dayOfWeek;
     }
 
     /**
      * @param DayOfWeek the DayOfWeek to set
      */
     public void setDayOfWeek(String DayOfWeek) {
-        this.DayOfWeek = DayOfWeek;
+        this.dayOfWeek = DayOfWeek;
     }
 
     /**
      * @return the TypeService
      */
     public String getTypeService() {
-        return TypeService;
+        return typeService;
     }
 
     /**
      * @param TypeService the TypeService to set
      */
     public void setTypeService(String TypeService) {
-        this.TypeService = TypeService;
+        this.typeService = TypeService;
     }
 
     /**
      * @return the BeginShift
      */
     public int getBeginShift() {
-        return BeginShift;
+        return beginShift;
     }
 
     /**
      * @param BeginShift the BeginShift to set
      */
     public void setBeginShift(int BeginShift) {
-        this.BeginShift = BeginShift;
+        this.beginShift = BeginShift;
     }
 
     /**
      * @return the EndShift
      */
     public int getEndShift() {
-        return EndShift;
+        return endShift;
     }
 
     /**
      * @param EndShift the EndShift to set
      */
     public void setEndShift(int EndShift) {
-        this.EndShift = EndShift;
+        this.endShift = EndShift;
     }
 
     /**
      * @return the PlaceQuantity
      */
     public int getPlaceQuantity() {
-        return PlaceQuantity;
+        return placeQuantity;
     }
 
     /**
      * @param PlaceQuantity the PlaceQuantity to set
      */
     public void setPlaceQuantity(int PlaceQuantity) {
-        this.PlaceQuantity = PlaceQuantity;
+        this.placeQuantity = PlaceQuantity;
     }
 
     /**
      * @return the IsEnable
      */
     public boolean isIsEnable() {
-        return IsEnable;
+        return isEnable;
     }
 
     /**
      * @param IsEnable the IsEnable to set
      */
     public void setIsEnable(boolean IsEnable) {
-        this.IsEnable = IsEnable;
+        this.isEnable = IsEnable;
     }
-    
+    //</editor-fold>
     
 }

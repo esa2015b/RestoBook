@@ -1,4 +1,17 @@
 
+                                        <li class="active">
+                                            <a href="<%= request.getContextPath()%>/Home">
+                                                <span class="glyphicon glyphicon-home"></span>
+                                                Home
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="<%= request.getContextPath()%>/RestoWeb?action=displayResto">
+                                                <span class="glyphicon glyphicon-question-sign"></span>
+                                                I Feel Lucky
+                                            </a>
+                                        </li>
+
 					  </ul>
 					  <!-- Search Form -->
 					  <form class="navbar-form navbar-left" role="search" action="<%= request.getContextPath()%>/RestoWeb" method="post">

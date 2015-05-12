@@ -1,7 +1,5 @@
 package controller;
 
-import com.microsoft.schemas._2003._10.serialization.arrays.ArrayOfint;
-import com.microsoft.schemas._2003._10.serialization.arrays.ObjectFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -14,7 +12,6 @@ import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpSession;
 import model.*;
-import org.tempuri.RestoBookService;
 
 /**
  *
@@ -53,10 +50,10 @@ public class RestoWeb extends HttpServlet {
             
             if (request.getParameter("action") == null)
             {
-                //ArrayOfint ints = new ObjectFactory().createArrayOfint();
+                // TODO : Fetch top restaurants / Premium restaurants from webservice.
                 
                 // Call the restaurantManager and get the diferent lists to show in the sliders
-                // and fetch 3 per categorie.
+                // and fetch 3 per category.
                 List<LightRestaurant> chineseRestaurants = this.persistenceMgr.getLightRestaurantsByFoodType(FoodTypeEnum.Chinese,3);
                 List<LightRestaurant> frenchRestaurants = this.persistenceMgr.getLightRestaurantsByFoodType(FoodTypeEnum.French,3);
                 List<LightRestaurant> italianRestaurants = this.persistenceMgr.getLightRestaurantsByFoodType(FoodTypeEnum.Italian,3);
@@ -76,15 +73,13 @@ public class RestoWeb extends HttpServlet {
             */
             else if (request.getParameter("action") != null && request.getParameter("action").equals("displayResto"))
             {
-                DummyMgr mgr = new DummyMgr();
-                
                 DisplayRestaurant restaurant = new DisplayRestaurant();
                 
                 if (request.getParameterMap().containsKey("id"))
                 {
-                    restaurant = mgr.getRestaurant(Integer.parseInt(request.getParameter("id")));
+                    restaurant = this.dummyMgr.getRestaurant(Integer.parseInt(request.getParameter("id")));
                 }else{
-                    restaurant = mgr.getRdmRestaurant();
+                    restaurant = this.dummyMgr.getRdmRestaurant();
                 }
 
                 HttpSession session = request.getSession();
@@ -101,10 +96,9 @@ public class RestoWeb extends HttpServlet {
             else if (request.getParameter("action") != null && request.getParameter("action").equals("searchResto"))
             {    
                 List<LightRestaurant> restaurants = new ArrayList<LightRestaurant>();
-                DummyMgr mgr = new DummyMgr();
                 
                 String name = request.getParameter("name");
-                restaurants = mgr.getRestaurantByName(name);
+                restaurants = this.dummyMgr.getRestaurantByName(name);
                     
                 if (restaurants.isEmpty()){
                     ControllerException error = new ControllerException("nameResto", "No results found.");
@@ -126,13 +120,12 @@ public class RestoWeb extends HttpServlet {
             else if (request.getParameter("action") != null && request.getParameter("action").equals("advancedSearch"))
             {
                 List<LightRestaurant> restaurants = new ArrayList<LightRestaurant>();
-                DummyMgr mgr = new DummyMgr();
                 
                 String name = request.getParameter("name");
                 String type = request.getParameter("type");
                 String city = request.getParameter("city");
                 
-                restaurants = mgr.getRestaurantAdvanced(name,type,city);
+                restaurants = this.dummyMgr.getRestaurantAdvanced(name,type,city);
                     
                 if (restaurants.isEmpty()){
                     ControllerException error = new ControllerException("nameResto", "No results found.");
@@ -193,7 +186,7 @@ public class RestoWeb extends HttpServlet {
         }
         catch(Exception e)
         {
-            int why = 25;
+            int test = 5;
         }
         finally
         {

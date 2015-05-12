@@ -21,6 +21,8 @@ public class Address {
     private boolean HeadOffice;
     private boolean IsEnable;
     
+    
+    
     public Address(int Id, int RestaurantId, String Street, String Number, String ZipCode, String City, String Country, boolean HeadOffice, boolean IsEnable ){
         this.Id = Id;
         this.RestaurantId = RestaurantId;
@@ -32,6 +34,8 @@ public class Address {
         this.HeadOffice = HeadOffice;
         this.IsEnable = IsEnable;
     }
+    
+    
     
     public Address(){
         

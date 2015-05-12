@@ -25,6 +25,7 @@ public class Restaurant {
     private boolean IsPremium;
     private List<PriceList> PriceList;
     private List<Employee> Employee;
+    private List<Service> Services;
     private FoodType FoodType;
     private Owner owner;
     
@@ -226,6 +227,22 @@ public class Restaurant {
      */
     public void setOwner(Owner owner) {
         this.owner = owner;
+    }
+    
+    /**
+     *
+     * @return the list of services of the restaurant.
+     */
+    public List<Service> getServices(){
+        return this.Services;
+    }
+    
+    /**
+     *
+     * @param services Sets the services for the restaurant.
+     */
+    public void setServices(List<Service> services){
+        this.Services = services;
     }
    
 }

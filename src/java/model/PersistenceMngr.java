@@ -3,7 +3,11 @@ package model;
 import java.util.List;
 import java.util.ArrayList;
 import domain.*;
+import java.util.GregorianCalendar;
 import java.util.Random;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import org.datacontract.schemas._2004._07.restobook_common_model.ObjectFactory;
 import org.tempuri.RestoBookService;
 
 /**
@@ -12,6 +16,20 @@ import org.tempuri.RestoBookService;
  */
 public class PersistenceMngr implements IPersistenceMgr
 {
+    // <editor-fold defaultstate="collapsed" desc="MEMBERS">
+    private ObjectFactory objectFactory;
+    // </editor-fold>
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="CONSTRUCTOR">
+    public PersistenceMngr()
+    {
+        this.objectFactory = new ObjectFactory();
+    }
+    // </editor-fold>
+    
+    
+    
     
     // <editor-fold defaultstate="collapsed" desc="À VERIFIER">
     
@@ -202,7 +220,7 @@ public class PersistenceMngr implements IPersistenceMgr
         List<org.datacontract.schemas._2004._07.restobook_common_model.LightRestaurant> restaurants = service.getBasicHttpBindingIRestoBookService().getLightRestaurantByFoodType((ftEnum.ordinal())).getLightRestaurant();
         
         // Check if user wants full list or only a sample of the list.
-        if (numberOfElements == 0 || numberOfElements != restaurants.size()) {
+        if (numberOfElements == 0 || numberOfElements > restaurants.size()) {
             numberOfElements = restaurants.size();
         }
         
@@ -226,6 +244,52 @@ public class PersistenceMngr implements IPersistenceMgr
         }
         
         return mappedRestaurants;
+    }
+    
+    
+    public boolean CreateReservation(Reservation reservation, Customer customer) throws DatatypeConfigurationException
+    {
+        RestoBookService service = new RestoBookService();
+        
+        // Map the received Reservation to the reservation object
+        org.datacontract.schemas._2004._07.restobook_common_model.Reservation res = objectFactory.createReservation();
+        res.setCustomerId(customer.getId());
+        res.setIsEnabled(true);
+        res.setPlaceQuantity(reservation.getPlaceQuantity());
+        
+        GregorianCalendar g = new GregorianCalendar();
+        g.setTime(reservation.getReservationDate());
+        
+        res.setReservationDate(DatatypeFactory.newInstance().newXMLGregorianCalendar(g));
+        res.setService(reservation.getService());
+        res.setServiceId(reservation.getServiceId());
+        
+        res.setRestoComments(customer.getName() + " \r\n " + customer.getMail() + " \r\n " + customer.getPhone() + " \r\n " + reservation.getReservationComments());
+        
+        // Map the received Customer to the service.customer object
+        org.datacontract.schemas._2004._07.restobook_common_model.Customer cus = objectFactory.createCustomer();
+        cus.setIsEnable(true);
+        cus.setMail(customer.getMail());
+        cus.setPhone(customer.getPhone());
+        
+        // Call the service and return the valid insertion response.
+        boolean response = service.getBasicHttpBindingIRestoBookService().createReservation(res, cus);
+        
+        return response;
+    }
+    
+    /**
+     * Gets the full restaurant object for a restaurant identifier.
+     * @param restaurantId : The restaurant identifier.
+     * @return : The full restaurant object.
+     */
+    public Restaurant getFullRestaurant(int restaurantId)
+    {
+        RestoBookService service = new RestoBookService();
+        
+        org.datacontract.schemas._2004._07.restobook_common_model.Restaurant serviceResto = service.getBasicHttpBindingIRestoBookService().getRestaurantById(restaurantId);
+        
+        return this.mapFullRestaurant(serviceResto);
     }
     //</editor-fold>
     
@@ -269,6 +333,7 @@ public class PersistenceMngr implements IPersistenceMgr
         Owner owner = new Owner();
         List<Employee> emp = new ArrayList<Employee>();
         List<PriceList> pl = new ArrayList<PriceList>();
+        List<Service> services = new ArrayList<>();
         
         // Assignation to Restaurant and FoodType from WCF.
         result.setDayOfClosing(wcfRep.getDayOfClosing());
@@ -322,12 +387,29 @@ public class PersistenceMngr implements IPersistenceMgr
             pl.add(pricelist);
         }
         
+        for (int i = 0; i < wcfRep.getServices().getService().size(); i++) {
+            
+            Service service = new Service();
+            
+            service.setId(wcfRep.getServices().getService().get(i).getId());
+            service.setBeginShift(wcfRep.getServices().getService().get(i).getBeginShift());
+            service.setDayOfWeek(wcfRep.getServices().getService().get(i).getServiceDay().toString());
+            service.setEndShift(wcfRep.getServices().getService().get(i).getEndShift());
+            service.setPlaceQuantity(wcfRep.getServices().getService().get(i).getPlaceQuantity());
+            service.setTypeService(wcfRep.getServices().getService().get(i).getTypeService());
+            
+            services.add(service);
+            //Date wcfRep.getServices().getService().get(i).getServiceDate();
+            //service.setServiceDate();
+        }
+        
         // Assignation
         result.setOwner(owner);
         result.setFoodType(foodType);
         result.setEmployee(emp);
         result.setPriceList(pl);
         result.setEmployee(emp);
+        result.setServices(services);
                         
         return result;
     }

@@ -5,22 +5,26 @@
  */
 package controller;
 
-import com.microsoft.schemas._2003._10.serialization.arrays.ObjectFactory;
 import domain.Customer;
 import domain.DisplayRestaurant;
+import domain.ErrorView;
+import domain.Service;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.apache.tomcat.util.codec.binary.StringUtils;
-import org.datacontract.schemas._2004._07.restobook_common_model.Reservation;
+import model.ValidationMgr;
+import model.IValidationMgr;
+import model.IPersistenceMgr;
+import model.PersistenceMngr;
 
 /**
  *
@@ -29,20 +33,21 @@ import org.datacontract.schemas._2004._07.restobook_common_model.Reservation;
 public class DisplayNewReservation extends HttpServlet
 {
     // <editor-fold defaultstate="collapsed" desc="PROPERTIES">
-    
+    private IPersistenceMgr persistenceMgr;
+    private IValidationMgr validationMgr;
     //</editor-fold>
 
 
     // <editor-fold defaultstate="collapsed" desc="CONSTRUCTOR">
-    
+    public DisplayNewReservation()
+    {
+        this.persistenceMgr = new PersistenceMngr();
+        this.validationMgr = new ValidationMgr();
+    }
     //</editor-fold>
 
 
     // <editor-fold defaultstate="collapsed" desc="PUBLIC METHODS">
-    
-    //</editor-fold>
-
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -60,6 +65,8 @@ public class DisplayNewReservation extends HttpServlet
         {
             if (request.getParameter("action") != null && request.getParameter("action").equals("confirmReservation"))
             {
+                ErrorView errors = new ErrorView();
+                
                 HttpSession session = request.getSession();
                 if (request.getParameter("customerName") != null
                         && request.getParameter("customerEmail") != null
@@ -68,6 +75,9 @@ public class DisplayNewReservation extends HttpServlet
                         && request.getParameter("reservationDate") != null
                         && request.getParameter("reservationService") != null)
                 {
+                    
+                    // TODO : create a "required variables" verification, and return an errorlist if needed to the view.
+                    
                     // Fetch the information from the session
                     domain.Reservation reservation = new domain.Reservation(0,
                                                                             0,
@@ -82,16 +92,17 @@ public class DisplayNewReservation extends HttpServlet
                                                             request.getParameter("customerPhone"),
                                                             request.getParameter("customerName"));
                     
+                    // Fetch all the required variables from the request and fill the right objects.
+                    customer.setName(request.getParameter("customerName"));
+                    customer.setMail(request.getParameter("customerEmail"));
+                    customer.setPhone(request.getParameter("customerPhone"));
                     
-                    
-                    String userName = request.getParameter("customerName");
-                    String userMail = request.getParameter("customerEmail");
-                    String userPhone = request.getParameter("customerPhone");
-                    int reservationPlaceQuantity = Integer.parseInt(request.getParameter("reservationPlaceQuantity"));
+                    reservation.setPlaceQuantity(Integer.parseInt(request.getParameter("reservationPlaceQuantity")));
                     String reservationDateString = request.getParameter("reservationDate");
-                    String reservationService = request.getParameter("reservationService");
-                    String reservationComments = request.getParameter("reservationComments");
+                    reservation.setService(request.getParameter("reservationService"));
+                    reservation.setReservationComments(request.getParameter("reservationComments"));
                     
+                    // Set the request/session variables (in case there's an error)
                     request.setAttribute("restaurant", restaurant);
                     request.setAttribute("customer", customer);
                     request.setAttribute("reservation", reservation);
@@ -100,46 +111,100 @@ public class DisplayNewReservation extends HttpServlet
                     session.setAttribute("customer", customer);
                     session.setAttribute("reservation", reservation);
                     
-                    // check if reservationdate is a valid date
-                    try
+                    // Check if service is a valid service format (hh:mm)
+                    if (validationMgr.ValidateTime(reservation.getService()))
                     {
-                        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                        Date tempDate = df.parse(reservationDateString);
-                        tempDate.setHours(Integer.parseInt(reservationService.substring(0, reservationService.indexOf(":"))));
-                        tempDate.setMinutes(Integer.parseInt(reservationService.substring(reservationService.indexOf(":") + 1 ,reservationService.length())));
-                        reservation.setReservationDate(tempDate);
-                    } 
-                    catch (Exception e)
+                        // check if reservationdate is a valid date
+                        try
+                        {
+                            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                            Date tempDate = df.parse(reservationDateString);
+                            tempDate.setHours(Integer.parseInt(reservation.getService().substring(0, reservation.getService().indexOf(":"))));
+                            tempDate.setMinutes(Integer.parseInt(reservation.getService().substring(reservation.getService().indexOf(":") + 1 ,reservation.getService().length())));
+                            reservation.setReservationDate(tempDate);
+                            request.setAttribute("reservation", reservation);
+                            session.setAttribute("reservation", reservation);
+                            
+                            boolean hasValidReservationDayAndShift = false;
+                            
+                            String resaDateStr = new SimpleDateFormat("EEEE", Locale.FRENCH).format(reservation.getReservationDate());
+                            boolean foundService = false;
+                            
+                            for (Service service : restaurant.getServices())
+                            {
+                                String serviceDateStr = new SimpleDateFormat("EEEE", Locale.FRENCH).format(service.getServiceDate());
+                                
+                                if(resaDateStr.compareToIgnoreCase(serviceDateStr) == 0 && !foundService)
+                                {
+                                    int placeSeparator = reservation.getService().indexOf(":");
+                                    int hours = Integer.parseInt(reservation.getService().substring(0, placeSeparator));
+                                    //int minutes = Integer.getInteger(reservation.getService().substring(placeSeparator,reservation.getService().length()-1));
+                                    if (hours > service.getBeginShift() && hours < service.getEndShift())
+                                    {
+                                        hasValidReservationDayAndShift = true;
+                                        reservation.setServiceId(service.getId());
+                                        foundService = true;
+                                    }
+                                }
+                            }
+                            if (!hasValidReservationDayAndShift)
+                            {
+                                errors.setError("No service shift on the requested date.");
+                            }
+                            if (errors.getErrors().isEmpty())
+                            {
+                                // Call the reservationManager
+                                if(!this.persistenceMgr.CreateReservation(reservation, customer))
+                                {
+                                    errors.setError("An error occurred during the creation of your reservation.\r\nPlease try again, or contact the site administrator.");
+                                }
+                            }
+                        } 
+                        catch (Exception e)
+                        {
+                            errors.setError("The reservation date is invalid. Please enter in following format : dd/MM/yyy (e.g. : 21/06/2015)");
+                        }
+                    }
+                    else
                     {
+                        reservation.setReservationDate(new Date());
+                        errors.setError("The service time has to be in format hh:mm (e.g. : 13:45)");
+                    }
+                    
+                    // Set the request/session variables (in case there's an error)
+                    request.setAttribute("restaurant", restaurant);
+                    request.setAttribute("customer", customer);
+                    request.setAttribute("reservation", reservation);
+
+                    session.setAttribute("restaurant", restaurant);
+                    session.setAttribute("customer", customer);
+                    session.setAttribute("reservation", reservation);
+                    
+                    if (errors.getErrors().size() > 0)
+                    {
+                        // Return to the page with the errors in case of problem
+                        request.setAttribute("errors", errors);
                         RequestDispatcher view = request.getRequestDispatcher("displayNewReservation.jsp");
                         view.forward(request, response);
                     }
+                    else
+                    {
+                        // Go to the successful page in case of creation
+                        RequestDispatcher view = request.getRequestDispatcher("displayConfirmation.jsp");
+                        view.forward(request, response);
+                    }
                     
-                    // Create a valid reservation object
-                    
-                    
-                    // Call the reservationManager
-                    
-                    
-                    // Return to the page in cas of problem
-                    
-                    
-                    // Go to the successful page in case of creation
-                    
-                    
-                }
-
-                if (session.getAttribute("customer") != null)
-                {
-                    //Customer customer = (Customer)session.getAttribute("customer");
                 }
             }
-        } catch (Exception e)
+        }
+        catch (NumberFormatException | ServletException | IOException e)
         {
 
         }
     }
-
+    //</editor-fold>
+    
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

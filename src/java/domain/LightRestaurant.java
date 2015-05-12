@@ -12,11 +12,13 @@ import java.util.List;
  * @author Thibaut
  */
 public class LightRestaurant {
+    
     private int id;
     private String name;
     private String description;
     private String pictureLocation;
     private String foodTypeName;
+    private String city;
 
     public LightRestaurant(){
         
@@ -90,5 +92,23 @@ public class LightRestaurant {
      */
     public void setFoodTypeName(String FoodTypeName) {
         this.foodTypeName = FoodTypeName;
+    }
+    
+    /**
+     *
+     * @return The restaurant's city.
+     */
+    public String getCity()
+    {
+        return this.city;
+    }
+    
+    /**
+     *
+     * @param city : Sets the city for this restaurant.
+     */
+    public void setCity(String city)
+    {
+        this.city = city;
     }
 }

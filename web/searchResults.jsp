@@ -3,9 +3,6 @@
 <%@page import="domain.*"%>
 <%@include file="_header.jsp" %>
 
-						<li><a href="index.jsp">Home</a></li>
-						<li><a href="<%= request.getContextPath()%>/RestoWeb?action=displayResto">I Feel Lucky</a></li>
-
 <%@include file="_navBar.jsp" %>
 
 			<%! List<LightRestaurant> restaurants; %>
@@ -22,7 +19,7 @@
                                         <b><%= restaurant.getName()%></b>
                                         <ul>
                                             <li><%= restaurant.getFoodTypeName()%></li>
-                                            <li>*City*</li>
+                                            <li><%= restaurant.getCity() %></li>
                                             <li><%= restaurant.getDescription()%></li>
                                         </ul>
                                     </div>

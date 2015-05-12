@@ -6,20 +6,29 @@
 <%@page import="domain.*"%>
 <%@include file="_header.jsp" %>
 
-<li><a href="index.jsp">Home</a></li>
-<li><a href="<%= request.getContextPath()%>/RestoWeb?action=displayResto">I Feel Lucky</a></li>
-
 <%@include file="_navBar.jsp" %>
+
 <jsp:useBean id="customer" scope="session" class="domain.Customer"></jsp:useBean>
-<jsp:useBean id="restaurant" scope="session" class="domain.Restaurant"></jsp:useBean>
+<jsp:useBean id="restaurant" scope="session" class="domain.DisplayRestaurant"></jsp:useBean>
 
 <div>
-    <fieldset>
-        Reservation sent to RestoBook<br>
-        Thanks a lot !<br><br>
-        You'll receive confirmation from <jsp:getProperty name="restaurant" property="name" ></jsp:getProperty><br>
-        at your mail address: <jsp:getProperty name="customer" property="mail"></jsp:getProperty><br>
-        See you soon.
+    <p>
+        <a href="<%= request.getContextPath()%>/RestoWeb?action=displayResto&id=<%= restaurant.getId() %>">
+            Return to <%= restaurant.getName() %> info page
+        </a>
+    </p>
+    <fieldset class="text-success">
+        <p class="text-success">Reservation submitted to 
+            <a href="<%= request.getContextPath()%>/RestoWeb?action=displayResto&id=<%= restaurant.getId() %>"><b><%= restaurant.getName() %></b></a></p><br />
+        <p class="text-success">We thank you for using Restobook, <em><%= customer.getName() %></em></p>
+        
+        <p class="text-success">You will shortly receive a confirmation from <%= restaurant.getName() %>
+        at your mail address: <em><%= customer.getMail() %></em></p>
+        
+        <p class="text-success">See you soon, and don't forget to book your future dinners at 
+            <a href="<%= request.getContextPath()%>/Home" ><b>Restobook</b></a> !</p><br />
+        
+        <p class="text-success">Best regards from the Restobook crew.</p>
     </fieldset>
 </div>
        

@@ -5,7 +5,7 @@
 
 <%-- We write these menu link here so we can change active page --%>
 
-<li class="active">
+<!--<li class="active">
     <a href="<%= request.getContextPath()%>/Home">
         <span class="glyphicon glyphicon-home"></span>
         Home
@@ -16,7 +16,7 @@
         <span class="glyphicon glyphicon-question-sign"></span>
         I Feel Lucky
     </a>
-</li>
+</li>-->
 						
 <%@include file="_navBar.jsp" %>
 

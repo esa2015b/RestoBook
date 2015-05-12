@@ -5,6 +5,7 @@
  */
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,12 +24,14 @@ public class DisplayRestaurant {
     private String dayOfClosing;
     private String pictureLocation;
     private String foodTypeName;
+    private List<Service> services;
+    private Address address;
     // </editor-fold>
     
     
     // <editor-fold defaultstate="collapsed" desc="CONSTRUCTORS">
     public DisplayRestaurant(){
-        
+        this.services = new ArrayList<>();
     }
     
     public DisplayRestaurant(int id, 
@@ -39,7 +42,8 @@ public class DisplayRestaurant {
                              int placeQuantity, 
                              String dayOfClosing,
                              String pictureLocation,
-                             String foodTypeName)
+                             String foodTypeName,
+                             Address address)
     {
         this.id = id;
         this.name = name;
@@ -50,6 +54,8 @@ public class DisplayRestaurant {
         this.dayOfClosing = dayOfClosing;
         this.pictureLocation = pictureLocation;
         this.foodTypeName = foodTypeName;
+        this.services = new ArrayList<>();
+        this.address = address;
     }
     // </editor-fold>
     
@@ -179,6 +185,42 @@ public class DisplayRestaurant {
      */
     public void setFoodTypeName(String FoodTypeName) {
         this.foodTypeName = FoodTypeName;
+    }
+    
+    /**
+     *
+     * @return The restaurant's address.
+     */
+    public Address getAddress()
+    {
+        return this.address;
+    }
+    
+    /**
+     *
+     * @param address : Sets the restaurant's address.
+     */
+    public void setAddress(Address address)
+    {
+        this.address = address;
+    }
+    
+    /**
+     *
+     * @return The list of services for this restaurant.
+     */
+    public List<Service> getServices()
+    {
+        return this.services;
+    }
+    
+    /**
+     *
+     * @param services The services to set.
+     */
+    public void setServices(List<Service> services)
+    {
+        this.services = services;
     }
     // </editor-fold>
     
