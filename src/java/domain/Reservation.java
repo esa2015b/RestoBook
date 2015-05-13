@@ -5,7 +5,6 @@
  */
 package domain;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -13,11 +12,14 @@ import java.util.Date;
  *
  * @author Jean-Louis
  */
-public class Reservation {
+public class Reservation
+{
 
     // <editor-fold defaultstate="collapsed" desc="MEMBERS">
     private int id;
     private int customerId;
+    private String customerMail;
+    private String customerPhone;
     private int serviceId;
     private Date reservationDate;
     private String service;
@@ -27,6 +29,8 @@ public class Reservation {
     private String restoComments;
     private String reservationComments;
     private boolean isEnable;
+    private ColorCodeEnum colorCode;
+    private boolean restoRejection;
     // </editor-fold>
     
     
@@ -113,6 +117,12 @@ public class Reservation {
         return this.restoConfirmationDate;
     }
     
+    public String getRestoConfirmationDateSimple()
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        return sdf.format(this.restoConfirmationDate);
+    }
+    
     @SuppressWarnings("AssignmentToDateFieldFromParameter")
     public void setRestoConfirmationDate(Date restoConfirmationDate){
         this.restoConfirmationDate = restoConfirmationDate;
@@ -142,6 +152,73 @@ public class Reservation {
     public void setReservationComments(String reservationComments)
     {
         this.reservationComments = reservationComments;
+    }
+    
+    /**
+     * Gets the colorcode enumeration's name.
+     * @return The colorcode enumeration as string.
+     */
+    public String getColorCodeName()
+    {
+        return this.colorCode.name();
+    }
+    
+    /**
+     * Gets the colorcode enumeration.
+     * @return The colorcode enumeration.
+     */
+    public ColorCodeEnum getColorCode()
+    {
+        return this.colorCode;
+    }
+    
+    /**
+     * Sets the color code enumeration.
+     * @param colorCode : The colorcode enumeration to set.
+     */
+    public void setColorCode(ColorCodeEnum colorCode)
+    {
+        this.colorCode = colorCode;
+    }
+    
+    public String getCustomerMail()
+    {
+        return this.customerMail;
+    }
+    
+    public void setCustomerMail(String mail)
+    {
+        this.customerMail = mail;
+    }
+    
+    public String getCustomerPhone()
+    {
+        return this.customerPhone;
+    }
+    
+    public void setCustomerPhone(String phone)
+    {
+        this.customerPhone = phone;
+    }
+    
+    public String getRestoConfirmationChecked()
+    {
+        return this.restoConfirmation ? "checked" : "";
+    }
+    
+    public void setRestoRejected(boolean restoRejection)
+    {
+        this.restoRejection = restoRejection;
+    }
+    
+    public boolean getRestoRejected()
+    {
+        return this.restoRejection;
+    }
+    
+    public String getRestoRejectedChecked()
+    {
+        return this.restoRejection ? "checked" : "";
     }
     // </editor-fold>
     

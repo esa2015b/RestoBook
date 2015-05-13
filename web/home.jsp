@@ -20,6 +20,8 @@
 						
 <%@include file="_navBar.jsp" %>
 
+<%@include file="_errors.jsp" %>
+
                                     <!-- Carousel -->
 					<div id="myCarousel" class="carousel slide" data-ride="carousel">
 						<ol class="carousel-indicators">

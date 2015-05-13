@@ -9,7 +9,6 @@ import domain.Customer;
 import domain.DisplayRestaurant;
 import domain.Reservation;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,7 +19,7 @@ import javax.servlet.http.HttpSession;
 import model.DummyMgr;
 import model.IDummyAble;
 import model.IPersistenceMgr;
-import model.PersistenceMngr;
+import model.PersistenceMgr;
 
 /**
  *
@@ -37,7 +36,7 @@ public class Display extends HttpServlet {
     
     // <editor-fold defaultstate="collapsed" desc="CONSTRUCTOR">
     public void init() throws ServletException {
-        this.persistenceMgr = new PersistenceMngr();
+        this.persistenceMgr = new PersistenceMgr();
         this.dummyMgr = new DummyMgr();
     }
     // </editor-fold>

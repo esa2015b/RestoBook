@@ -28,7 +28,7 @@ public class RestoWeb extends HttpServlet {
     // <editor-fold defaultstate="collapsed" desc="CONSTRUCTOR">
     public void init() throws ServletException
     {
-        this.persistenceMgr = new PersistenceMngr();
+        this.persistenceMgr = new PersistenceMgr();
         this.dummyMgr = new DummyMgr();
     }
     // </editor-fold>

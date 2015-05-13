@@ -12,7 +12,6 @@ import domain.Service;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import javax.servlet.RequestDispatcher;
@@ -24,7 +23,7 @@ import javax.servlet.http.HttpSession;
 import model.ValidationMgr;
 import model.IValidationMgr;
 import model.IPersistenceMgr;
-import model.PersistenceMngr;
+import model.PersistenceMgr;
 
 /**
  *
@@ -41,7 +40,7 @@ public class DisplayNewReservation extends HttpServlet
     // <editor-fold defaultstate="collapsed" desc="CONSTRUCTOR">
     public DisplayNewReservation()
     {
-        this.persistenceMgr = new PersistenceMngr();
+        this.persistenceMgr = new PersistenceMgr();
         this.validationMgr = new ValidationMgr();
     }
     //</editor-fold>

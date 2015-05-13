@@ -108,8 +108,6 @@ public class DummyMgr implements IDummyAble
         
     }
     
-    
-     
     private DisplayRestaurant mapDisplayRestaurant (org.datacontract.schemas._2004._07.restobook_common_model.Restaurant wcf){
         
         DisplayRestaurant displayResto = new DisplayRestaurant();

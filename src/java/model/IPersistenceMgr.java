@@ -1,6 +1,7 @@
 package model;
 
 import domain.*;
+import java.util.ArrayList;
 import java.util.List;
 import javax.xml.datatype.DatatypeConfigurationException;
 
@@ -61,4 +62,18 @@ public interface IPersistenceMgr {
     
     
     public boolean CreateReservation(Reservation reservation, Customer customer) throws DatatypeConfigurationException;
+    
+    /**
+     * Gets the reservations for a given restaurant.
+     * @param restaurantId : The restaurant identifier.
+     * @return An arraylist of Model.Reservation.
+     */
+    public ArrayList<Reservation> GetReservationsByRestaurantId(int restaurantId);
+    
+    /**
+     * Modifies the reservations as requested.
+     * @param reservations : An arraylist of reservations to modify.
+     * @return True in case of successful modification, false if one or all modifications went wrong.
+     */
+    public boolean ModifyReservations(ArrayList<Reservation> reservations) throws DatatypeConfigurationException;
 }

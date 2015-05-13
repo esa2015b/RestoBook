@@ -96,7 +96,7 @@
                                                   </a>
 						    <div class="dropdown-menu login" style="padding: 15px; width: 250px;">
                                                         
-							  <form  enctype="multipart/form-data" method="post" action="#">
+                                                        <form  action="<%= request.getContextPath()%>/RestaurantReservations?action=myReservations" method="POST">
 							    <label>Login</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-addon">
@@ -113,13 +113,12 @@
                                                                 </span>
                                                                 <input type="text" name="password" class="form-control"/>
                                                             </div><br>
-                                                            
                                                             <div align="right">
-                                                                
                                                                 <button type="submit" class="btn btn-default">
                                                                     <span class="glyphicon glyphicon-log-in"></span>
                                                                     <span>Login</span>
                                                                 </button>
+                                                                <input type="hidden" name="action" value="myReservations"/>
                                                             </div>
 							  </form>
                                                         
