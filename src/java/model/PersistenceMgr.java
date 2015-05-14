@@ -284,6 +284,8 @@ public class PersistenceMgr implements IPersistenceMgr
         res.setService(reservation.getService());
         res.setServiceId(reservation.getServiceId());
         
+        res.setServiceDate(DatatypeFactory.newInstance().newXMLGregorianCalendar(g));
+        
         res.setRestoComments(customer.getName() + " \r\n " + customer.getMail() + " \r\n " + customer.getPhone() + " \r\n " + reservation.getReservationComments());
         
         // Map the received Customer to the service.customer object
