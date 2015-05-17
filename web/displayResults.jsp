@@ -41,8 +41,8 @@
                 Reservation date:<input type="date" name="reservationdate"><br>
                 Service: <input type="text" name="service" value="Midi"><br>
                 Number of place: <input type="number" name="placequantity" value=5><br>
-                Customer phone: <input type="tel" name="customerphone" value="0473/629.626."><br>
-                Customer mail: <input type="text" name="customermail" value="jlmoiny@gmail.com"><br>
+                Customer phone: <input type="tel" name="customerphone" value="0477/014789"><br>
+                Customer mail: <input type="text" name="customermail" value="klm@resto.com"><br>
                 <br>
                 <input type="submit" value="Book" value="newReservation" />
                 <input type="hidden" name="action" value="sendReservation" />
