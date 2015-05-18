@@ -137,6 +137,7 @@ public class RestaurantReservations extends HttpServlet
                         r.setService(ir.getService());
                         r.setServiceId(ir.getServiceId());
                         
+                        
                         r.setRestoConfirmation(restaurantConfirmed.equals("checked"));
                         if (restaurantConfirmed.equals("checked") && !ir.getRestoConfirmation())
                         {
@@ -146,7 +147,7 @@ public class RestaurantReservations extends HttpServlet
                         if (!restaurantConfirmed.equals("checked") && restaurantRejected.equals("checked"))
                         {
                             r.setRestoRejected(true);
-                            r.setRestoConfirmationDate(new Date(Long.MIN_VALUE));
+                            r.setRestoConfirmationDate(new Date());
                             r.setIsEnable(false);
                             //LocalDate l = LocalDate.MIN;
                         }

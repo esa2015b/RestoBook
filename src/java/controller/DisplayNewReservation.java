@@ -138,7 +138,7 @@ public class DisplayNewReservation extends HttpServlet
                                     int placeSeparator = reservation.getService().indexOf(":");
                                     int hours = Integer.parseInt(reservation.getService().substring(0, placeSeparator));
                                     //int minutes = Integer.getInteger(reservation.getService().substring(placeSeparator,reservation.getService().length()-1));
-                                    if (hours > service.getBeginShift() && hours < service.getEndShift())
+                                    if (hours >= service.getBeginShift() && hours <= service.getEndShift())
                                     {
                                         hasValidReservationDayAndShift = true;
                                         reservation.setServiceId(service.getId());

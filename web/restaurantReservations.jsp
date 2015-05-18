@@ -12,6 +12,7 @@
 <%@include file="_navBar.jsp" %>
 
 <%! List<Reservation> reservations; %>
+
 <jsp:useBean id="changes" scope="request" class="java.lang.String"></jsp:useBean>
 
 <% reservations = (List<Reservation>) session.getAttribute("reservations"); %>

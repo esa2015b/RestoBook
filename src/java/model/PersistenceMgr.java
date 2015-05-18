@@ -3,11 +3,13 @@ package model;
 import java.util.List;
 import java.util.ArrayList;
 import domain.*;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Random;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
+import org.datacontract.schemas._2004._07.restobook_common_model.ArrayOfReservation;
 import org.datacontract.schemas._2004._07.restobook_common_model.ObjectFactory;
 import org.tempuri.RestoBookService;
 import sun.util.BuddhistCalendar;
@@ -312,7 +314,9 @@ public class PersistenceMgr implements IPersistenceMgr
         // Prepare the arraylist of services to return
         ArrayList<Reservation> reservations = new ArrayList<>();
         // Get the reservations from the wcf service.
-        List<org.datacontract.schemas._2004._07.restobook_common_model.Reservation> wcfReservations = service.getBasicHttpBindingIRestoBookService().getAllReservations().getReservation();
+        //List<org.datacontract.schemas._2004._07.restobook_common_model.Reservation> wcfReservations = service.getBasicHttpBindingIRestoBookService().getAllReservations().getReservation();
+        
+        List<org.datacontract.schemas._2004._07.restobook_common_model.Reservation> wcfReservations = service.getBasicHttpBindingIRestoBookService().getReservationByRestaurant(restaurantId).getReservation();
         
         for (org.datacontract.schemas._2004._07.restobook_common_model.Reservation wcfReservation : wcfReservations)
         {
@@ -487,7 +491,9 @@ public class PersistenceMgr implements IPersistenceMgr
         resa.setRestoConfirmationDate(wcfRes.getRestoConfirmationDate() == null ? 
                                             new Date(Long.MAX_VALUE) : 
                                             wcfRes.getRestoConfirmationDate().getValue().toGregorianCalendar().getTime());
-        resa.setRestoConfirmation(resa.getRestoConfirmationDate( ) == new Date(Long.MAX_VALUE));
+        GregorianCalendar tempDate = new GregorianCalendar();
+        tempDate.setTime(new Date(Long.MAX_VALUE));
+        resa.setRestoConfirmation(wcfRes.getRestoConfirmationDate().getValue().getYear() != 9999);
         resa.setService(wcfRes.getService());
         resa.setServiceId(wcfRes.getServiceId());
         
@@ -499,31 +505,36 @@ public class PersistenceMgr implements IPersistenceMgr
         
         Date dateToday = new Date();
         
+        int diffBetweenDates = this.daysBetween(dateToday, resa.getReservationDate());
         
-        // If reservation's not confirmed yet AND the reservation's for in less than 24h
-        if (!resa.getRestoConfirmation() && this.daysBetween(dateToday, resa.getReservationDate()) < 1)
+        // If reservation's not confirmed yet AND the reservation's passed
+        if (!resa.getRestoConfirmation() && diffBetweenDates < 0)
         {
             resa.setColorCode(ColorCodeEnum.danger);
         }
-        // If the reservation's not confirmed yet AND the reservation's for between tomorrow and next week
-        else if(!resa.getRestoConfirmation() && this.daysBetween(dateToday, resa.getReservationDate()) < 6)
+        // If reservation's not confirmed yet AND the reservation's for in less than 24h
+        else if (!resa.getRestoConfirmation() && diffBetweenDates < 1 && diffBetweenDates >= 0)
         {
             resa.setColorCode(ColorCodeEnum.warning);
         }
-        // If the reservation's not been confirmed yet for after next week
-        else if (!resa.getRestoConfirmation() && this.daysBetween(dateToday, resa.getReservationDate()) > 7)
-        {
-            resa.setColorCode(ColorCodeEnum.info);
-        }
-        // If the reservation's been confirmed and reservationdate is in the past
-        else if (resa.getRestoConfirmation() && this.daysBetween(dateToday, resa.getReservationDate()) < 1)
+        // If the reservation's not confirmed yet AND the reservation's for between tomorrow and next week
+        else if(!resa.getRestoConfirmation() && diffBetweenDates < 6 && diffBetweenDates >= 0)
         {
             resa.setColorCode(ColorCodeEnum.active);
         }
+        // If the reservation's not been confirmed yet for after next week
+        else if (!resa.getRestoConfirmation() && diffBetweenDates >= 7)
+        {
+            resa.setColorCode(ColorCodeEnum.info);
+        }
         // If the reservation's been confirmed for the future
-        else
+        else if (resa.getRestoConfirmation())
         {
             resa.setColorCode(ColorCodeEnum.success);
+        }
+        else
+        {
+            resa.setColorCode(ColorCodeEnum.danger);
         }
         
         return resa;
@@ -546,12 +557,15 @@ public class PersistenceMgr implements IPersistenceMgr
         
         GregorianCalendar g = new GregorianCalendar();
         g.setTime(r.getReservationDate());
-        res.setReservationDate(DatatypeFactory.newInstance().newXMLGregorianCalendar(g));
+        res.setServiceDate(DatatypeFactory.newInstance().newXMLGregorianCalendar(g));
+        
         
         GregorianCalendar gc = new GregorianCalendar();
         gc.setTime(r.getRestoConfirmationDate());
         res.setRestoConfirmationDate(this.objectFactory.createReservationRestoConfirmationDate(DatatypeFactory.newInstance().newXMLGregorianCalendar(gc)));
-
+        res.setReservationDate(DatatypeFactory.newInstance().newXMLGregorianCalendar(gc));
+        
+        
         res.setService(r.getService());
         res.setServiceId(r.getServiceId());
         
