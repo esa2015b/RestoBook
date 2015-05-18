@@ -122,8 +122,10 @@ public class RestaurantReservations extends HttpServlet
                 {
                     String restaurantConfirmed = request.getParameter(confReq) == null ? ir.getRestoConfirmationChecked() : request.getParameter(confReq);
                     String restaurantRejected = request.getParameter(rejReq) == null ? ir.getRestoRejectedChecked() : request.getParameter(rejReq);
-                
-                    if (restaurantConfirmed != ir.getRestoConfirmationChecked() || restaurantRejected != ir.getRestoRejectedChecked())
+                    
+                    //restaurantConfirmed.compareToIgnoreCase(ir.getRestoConfirmationChecked())
+                    
+                    if (restaurantConfirmed.compareToIgnoreCase(ir.getRestoConfirmationChecked()) != 0 || restaurantRejected != ir.getRestoRejectedChecked())
                     {
                         Reservation r = new Reservation();
                         r.setId(ir.getId());
@@ -178,6 +180,10 @@ public class RestaurantReservations extends HttpServlet
             if (successful)
             {
                 request.setAttribute("changes", "Your changes have been committed.");
+            }
+            else if(reservationsToModify.size() == 0)
+            {
+                request.setAttribute("changes", "No changes requested. Reservations that have been confirmed cannot be undone.");
             }
             else
             {

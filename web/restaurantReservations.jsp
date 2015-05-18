@@ -35,7 +35,7 @@
                 <th>Seats</th>
                 <th>Confirmed</th>
                 <th>Rejected</th>
-                <th>Confirmation Date</th>
+                <th>Reservation Date</th>
                 <th>Comments</th>
             </tr>
         </thead>

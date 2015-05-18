@@ -558,12 +558,11 @@ public class PersistenceMgr implements IPersistenceMgr
         GregorianCalendar g = new GregorianCalendar();
         g.setTime(r.getReservationDate());
         res.setServiceDate(DatatypeFactory.newInstance().newXMLGregorianCalendar(g));
-        
+        res.setReservationDate(DatatypeFactory.newInstance().newXMLGregorianCalendar(g));
         
         GregorianCalendar gc = new GregorianCalendar();
         gc.setTime(r.getRestoConfirmationDate());
         res.setRestoConfirmationDate(this.objectFactory.createReservationRestoConfirmationDate(DatatypeFactory.newInstance().newXMLGregorianCalendar(gc)));
-        res.setReservationDate(DatatypeFactory.newInstance().newXMLGregorianCalendar(gc));
         
         
         res.setService(r.getService());
