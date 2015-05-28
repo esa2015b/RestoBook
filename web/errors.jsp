@@ -11,13 +11,13 @@
 <%@include file="_navBar.jsp" %>
 
 <div>
-    <h1>
+    <h2 class="text-danger">
         Sorry an error has occurred.
-    </h1>
+    </h2>
 </div>
 
-<div>
-    <h2>
+<div class="error">
+    <h2 class="text-danger" >
         <%! ControllerException error; %><br>
         <% error = (ControllerException)request.getAttribute("error"); %><br>
         Error : <%= error.getMessage()%>
