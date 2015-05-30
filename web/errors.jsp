@@ -7,7 +7,6 @@
 <%@page import="controller.*"%>
 
 <%@include file="_header.jsp" %>
-
 <%@include file="_navBar.jsp" %>
 
 <div>
