@@ -26,7 +26,7 @@
 <div>
     <p>
         <% if (restaurant.getName() == null) {%>
-     <h2 class="text-danger" >Il n'y a pas de restaurant pour ce login</h2>
+     <h2 class="text-danger" >No restaurant for this login Id. Please try again.</h2>
         <%} else { %>
     <h2>    
         <%= restaurant.getName() %><% }%>
