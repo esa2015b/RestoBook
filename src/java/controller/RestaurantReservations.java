@@ -74,7 +74,13 @@ public class RestaurantReservations extends HttpServlet
         {
             String login = request.getParameter("login");
             String pwd = request.getParameter("password");
-            loginInt = Integer.parseInt(login);
+            if (login == ""){
+                ControllerException error = new ControllerException("nameResto", "No login input.");
+                request.setAttribute("error", error);
+                RequestDispatcher view = request.getRequestDispatcher("errors.jsp");
+                view.forward(request, response);
+            }
+            else loginInt = Integer.parseInt(login);
         }
         else if (session.getAttribute("loggedIn")!= null && session.getAttribute("loggedInRestaurantId") != null)
         {
@@ -86,7 +92,7 @@ public class RestaurantReservations extends HttpServlet
         
         // If the user is logged in and comes from the login form OR
         // If the user has already logged in and comes back to the reservation management page.
-        if ((action != null && action.equals("myReservations") && loginInt > 0 && loginInt < 15) || 
+        if ((action != null && action.equals("myReservations")) /*&& loginInt > 0 && loginInt < 15)*/ || 
                 (action != null && action.equals("myReservations") && session.getAttribute("loggedIn") != null && (boolean)session.getAttribute("loggedIn")))
         {
             // If this is the first time the user comes to the page (and isn't logged in yet),
@@ -98,7 +104,7 @@ public class RestaurantReservations extends HttpServlet
             }
             ArrayList<Reservation> reservations = this.persistenceMgr.GetReservationsByRestaurantId(loginInt);
             Restaurant restaurant = this.persistenceMgr.getFullRestaurant(loginInt);
-            
+
             // Set the reservations in session (for further use when saving changes)
             session.setAttribute("reservations", reservations);
             request.setAttribute("restaurant", restaurant);
