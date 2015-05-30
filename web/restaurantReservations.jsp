@@ -11,10 +11,11 @@
 						
 <%@include file="_navBar.jsp" %>
 
+<%! Restaurant restaurant; %>
 <%! List<Reservation> reservations; %>
 
 <jsp:useBean id="changes" scope="request" class="java.lang.String"></jsp:useBean>
-
+<% restaurant = (Restaurant) request.getAttribute("restaurant"); %>
 <% reservations = (List<Reservation>) session.getAttribute("reservations"); %>
 
 <div class="Success">
@@ -22,6 +23,15 @@
 </div>
 
 <%@include file="_errors.jsp" %>
+<div>
+    <p>
+        <% if (restaurant.getName() == null) {%>
+     <h2 class="text-danger" >Il n'y a pas de restaurant pour ce login</h2>
+        <%} else { %>
+    <h2>    
+        <%= restaurant.getName() %><% }%>
+    </h2>    
+</div>
 
 <form role="form" method="POST" action="<%= request.getContextPath()%>/RestaurantReservations?action=saveChanges" >
     <table class="table table-hover">
