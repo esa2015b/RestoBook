@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.xml.ws.WebServiceException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,7 +44,7 @@ public class RestoWeb extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, WebServiceException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
@@ -184,9 +185,21 @@ public class RestoWeb extends HttpServlet {
                 view.forward(request, response);  
             }            
         }
+    
+        catch (WebServiceException e)
+        {
+            ControllerException error = new ControllerException("noWS", "Web Service no available.");
+                    request.setAttribute("error", error);
+                    RequestDispatcher view = request.getRequestDispatcher("errors.jsp");
+                    view.forward(request, response);
+        }
+        
         catch(Exception e)
         {
-            int test = 5;
+            ControllerException error = new ControllerException("exception", "Please try later");
+                    request.setAttribute("error", error);
+                    RequestDispatcher view = request.getRequestDispatcher("errors.jsp");
+                    view.forward(request, response);
         }
         finally
         {
