@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.ws.WebServiceException;
 import model.DummyMgr;
 import model.IDummyAble;
 import model.IPersistenceMgr;
@@ -86,10 +87,30 @@ public class Display extends HttpServlet {
                 RequestDispatcher view = request.getRequestDispatcher("displayNewReservation.jsp");
                 view.forward(request, response);
             }
-        } 
-        catch (ServletException | IOException e) 
+        }
+        
+        catch (WebServiceException e)
         {
-            
+            ControllerException error = new ControllerException("exception", "WebServiceException. Web Service not available. Please contact RestoBook hotline.");
+                    request.setAttribute("error", error);
+                    RequestDispatcher view = request.getRequestDispatcher("errors.jsp");
+                    view.forward(request, response);
+        }
+        
+        catch (IOException e)
+        {
+            ControllerException error = new ControllerException("exception", "IOException. Please contact RestoBook hotline.");
+            request.setAttribute("error", error);
+            RequestDispatcher view = request.getRequestDispatcher("errors.jsp");
+            view.forward(request, response);
+        }
+        
+        catch (Exception e)
+        {
+            ControllerException error = new ControllerException("exception", "Please try later or contact RestoBook hotline.");
+            request.setAttribute("error", error);
+            RequestDispatcher view = request.getRequestDispatcher("errors.jsp");
+            view.forward(request, response);
         }
     }
     // </editor-fold>
