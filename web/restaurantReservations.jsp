@@ -23,8 +23,11 @@
 </div>
 
 <%@include file="_errors.jsp" %>
+
+
 <div>
     <p>
+        <!-- If restaurant is empty (the loginId input is not completed) -->
         <% if (restaurant.getName() == null) {%>
      <h2 class="text-danger" >No restaurant for this login Id. Please try again.</h2>
         <%} else { %>
