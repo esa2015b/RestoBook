@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.ws.WebServiceException;
 import model.ValidationMgr;
 import model.IValidationMgr;
 import model.IPersistenceMgr;
@@ -196,9 +197,43 @@ public class DisplayNewReservation extends HttpServlet
                 }
             }
         }
-        catch (NumberFormatException | ServletException | IOException e)
+        catch (NumberFormatException e)
         {
-
+            ControllerException error = new ControllerException("exception", "NumberFormatException. Please contact RestoBook hotline.");
+            request.setAttribute("error", error);
+            RequestDispatcher view = request.getRequestDispatcher("errors.jsp");
+            view.forward(request, response);
+        }
+        catch (ServletException e)
+        {
+            ControllerException error = new ControllerException("exception", "ServletException. Please contact RestoBook hotline.");
+            request.setAttribute("error", error);
+            RequestDispatcher view = request.getRequestDispatcher("errors.jsp");
+            view.forward(request, response);
+        }
+        
+        catch (WebServiceException e)
+        {
+            ControllerException error = new ControllerException("exception", "WebServiceException. Web Service not available. Please contact RestoBook hotline.");
+                    request.setAttribute("error", error);
+                    RequestDispatcher view = request.getRequestDispatcher("errors.jsp");
+                    view.forward(request, response);
+        }
+        
+        catch (IOException e)
+        {
+            ControllerException error = new ControllerException("exception", "IOException. Please contact RestoBook hotline.");
+            request.setAttribute("error", error);
+            RequestDispatcher view = request.getRequestDispatcher("errors.jsp");
+            view.forward(request, response);
+        }
+        
+        catch (Exception e)
+        {
+            ControllerException error = new ControllerException("exception", "Please try later or contact RestoBook hotline.");
+            request.setAttribute("error", error);
+            RequestDispatcher view = request.getRequestDispatcher("errors.jsp");
+            view.forward(request, response);
         }
     }
     //</editor-fold>
