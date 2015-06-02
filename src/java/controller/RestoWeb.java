@@ -188,7 +188,7 @@ public class RestoWeb extends HttpServlet {
     
         catch (WebServiceException e)
         {
-            ControllerException error = new ControllerException("noWS", "Web Service no available.");
+            ControllerException error = new ControllerException("exception", "WebServiceException. Web Service not available. Please contact RestoBook hotline.");
                     request.setAttribute("error", error);
                     RequestDispatcher view = request.getRequestDispatcher("errors.jsp");
                     view.forward(request, response);
@@ -196,7 +196,7 @@ public class RestoWeb extends HttpServlet {
         
         catch(Exception e)
         {
-            ControllerException error = new ControllerException("exception", "Please try later");
+            ControllerException error = new ControllerException("exception", "Please try later or contact RestoBook hotline.");
                     request.setAttribute("error", error);
                     RequestDispatcher view = request.getRequestDispatcher("errors.jsp");
                     view.forward(request, response);
